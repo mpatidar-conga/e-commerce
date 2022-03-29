@@ -42,7 +42,7 @@
                     </div>
                 </div>
                 <div class="col-12 col-md-4">
-                    <apt-price-summary [record]="view?.cart" [page]="'carts'"></apt-price-summary>
+                    <apt-price-summary [record]="view?.cart" [page]="'carts'" (onFinalizeQuote)="createQuote()"></apt-price-summary>
                     <apt-promotion class="mt-3" [cart]="view?.cart" ></apt-promotion>
                 </div>
             </div>

@@ -3,6 +3,7 @@ import { Cart, CartService, Product, ConstraintRuleService, CartItemService, Ite
 import { Observable, combineLatest } from 'rxjs';
 import { map as rmap } from 'rxjs/operators';
 import { get } from 'lodash';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-manage-cart',
@@ -25,7 +26,8 @@ export class ManageCartComponent implements OnInit {
   constructor(private cartService: CartService, 
               private cartItemService: CartItemService, 
               private crService: ConstraintRuleService, 
-              private cdr: ChangeDetectorRef) { }
+              private cdr: ChangeDetectorRef,
+              private router: Router) { }
 
   ngOnInit() {
     this.view$ = combineLatest(
@@ -44,6 +46,10 @@ export class ManageCartComponent implements OnInit {
 
   trackById(index, record): string {
     return get(record, 'MainLine.Id');
+  }
+
+  createQuote(){
+    this.router.navigate(['/proposals/create']);
   }
 }
 

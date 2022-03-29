@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { map } from 'rxjs/operators';
 import { ConfigurationService, ACondition } from '@congacommerce/core';
 import { ProductService, Product,  Cart, CartService } from '@congacommerce/ecommerce';
-import { ProductDrawerService, ProductSelectionService} from '@congacommerce/elements';
+import { ProductDrawerService, BatchSelectionService} from '@congacommerce/elements';
 import { Observable } from 'rxjs';
 
 
@@ -36,7 +36,7 @@ export class CompareLayoutComponent implements OnInit, OnDestroy {
   */
    cart$: Observable<Cart>;
 
-  constructor(private config: ConfigurationService, private activatedRoute: ActivatedRoute, private cartService: CartService, private router: Router, private productService: ProductService, private productSelectionService: ProductSelectionService, private productDrawerService: ProductDrawerService) {
+  constructor(private config: ConfigurationService, private activatedRoute: ActivatedRoute, private cartService: CartService, private router: Router, private productService: ProductService, private batchSelectionService: BatchSelectionService, private productDrawerService: ProductDrawerService) {
     this.identifier = this.config.get('productIdentifier');
   }
 
@@ -62,7 +62,7 @@ export class CompareLayoutComponent implements OnInit, OnDestroy {
         this.subs.push(this.productService.getProducts(null, null, null, null, null, null, conditions).pipe(map(res => res.Products)).subscribe(products => {
           const tableProducts = products.filter(product => newIdentifiers.includes(product[this.identifier]));
           this.products = tableProducts;
-          this.productSelectionService.setSelectedProducts(tableProducts);
+          this.batchSelectionService.setSelectedProducts(tableProducts);
           if (newIdentifiers.length < 2) this.router.navigateByUrl('/');
           this.identifiers = tableProducts.map(product => product[this.identifier]);
           this.productDrawerService.closeDrawer();

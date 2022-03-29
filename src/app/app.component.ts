@@ -5,7 +5,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router, NavigationEnd, ActivatedRoute } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import * as _ from 'lodash';
-import { ProductSelectionService } from '@congacommerce/elements';
+import { BatchSelectionService } from '@congacommerce/elements';
 
 @Component({
   selector: 'app-root',
@@ -27,7 +27,7 @@ export class AppComponent implements OnInit, OnDestroy {
   constructor(private titleService: Title,
     private router: Router,
     private activatedRoute: ActivatedRoute,
-    private productSelectionService: ProductSelectionService) {
+    private batchSelectionService: BatchSelectionService) {
   }
 
   ngOnInit() {
@@ -49,7 +49,7 @@ export class AppComponent implements OnInit, OnDestroy {
           this.titleService.setTitle('Conga: B2B E-commerce');
       });
 
-    this.showDrawer$ = this.productSelectionService.getSelectedProducts()
+    this.showDrawer$ = this.batchSelectionService.getSelectedProducts()
       .pipe(map(productList => _.get(productList, 'length', 0) > 0));
   }
 
