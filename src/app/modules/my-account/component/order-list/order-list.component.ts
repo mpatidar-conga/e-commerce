@@ -8,9 +8,6 @@ import { Operator, AFilter } from '@congacommerce/core';
 import { OrderService, Order } from '@congacommerce/ecommerce';
 import { TableOptions, FilterOptions } from '@congacommerce/elements';
 
-/**
- * Displays all orders for the logged in user in grid view with pagination.
- */
 @Component({
   selector: 'app-order-list',
   templateUrl: './order-list.component.html',

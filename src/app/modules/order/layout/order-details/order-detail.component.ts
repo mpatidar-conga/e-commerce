@@ -16,7 +16,6 @@ import {
   OrderLineItem,
   OrderService,
   UserService,
-  ProductInformationService,
   ItemGroup,
   LineItemService,
   Note,
@@ -26,7 +25,7 @@ import {
   Contact,
   CartService,
   Cart,
-  OrderLineItemService, Attachment, AttachmentService, Quote, Account
+  OrderLineItemService, Quote, Account
 } from '@congacommerce/ecommerce';
 import { ExceptionService, LookupOptions } from '@congacommerce/elements';
 import { ACondition, APageInfo, AFilter, ApiService } from '@congacommerce/core';
@@ -57,10 +56,6 @@ export class OrderDetailComponent implements OnInit, OnDestroy, AfterViewChecked
   noteList$: BehaviorSubject<Array<Note>> = new BehaviorSubject<Array<Note>>(null);
 
   noteSubscription: Subscription;
-
-  attachments$: BehaviorSubject<Array<Attachment>> = new BehaviorSubject<Array<Attachment>>(null);
-
-  attachmentSubscription: Subscription;
 
   /**
    * Boolean observable to check if user is logged in.
@@ -111,7 +106,6 @@ export class OrderDetailComponent implements OnInit, OnDestroy, AfterViewChecked
   constructor(private activatedRoute: ActivatedRoute,
     private orderService: OrderService,
     private userService: UserService,
-    private productInformationService: ProductInformationService,
     private exceptionService: ExceptionService,
     private noteService: NoteService,
     private router: Router,
@@ -121,8 +115,7 @@ export class OrderDetailComponent implements OnInit, OnDestroy, AfterViewChecked
     private cdr: ChangeDetectorRef,
     private ngZone: NgZone,
     private orderLineItemService: OrderLineItemService,
-    private apiService: ApiService,
-    private attachmentService: AttachmentService) { }
+    private apiService: ApiService) { }
 
   ngOnInit() {
     this.isLoggedIn$ = this.userService.isLoggedIn();
@@ -146,7 +139,7 @@ export class OrderDetailComponent implements OnInit, OnDestroy, AfterViewChecked
       .pipe(
         filter(params => get(params, 'id') != null),
         map(params => get(params, 'id')),
-        flatMap(orderId => this.orderService.fetch(orderId)),
+        flatMap(orderId => this.apiService.get(`/orders/${orderId}?lookups=${this.orderLookups}`, Order)),
         switchMap((order: Order) => combineLatest([of(order),
         get(order, 'ProposalId') ? this.apiService.get(`/quotes/${order.ProposalId}?lookups=${this.proposalLookups}`, Quote) : of(null),
         // Using query instead of get(), as get is not returning list of accounts as expected.
@@ -189,7 +182,6 @@ export class OrderDetailComponent implements OnInit, OnDestroy, AfterViewChecked
       })).subscribe();
 
     this.getNotes();
-    this.getAttachments();
   }
 
   refreshOrder(fieldValue, order, fieldName) {
@@ -232,31 +224,13 @@ export class OrderDetailComponent implements OnInit, OnDestroy, AfterViewChecked
     return orderLineItems.filter(orderItem => !orderItem.IsPrimaryLine && orderItem.PrimaryLineNumber === lineItem.PrimaryLineNumber);
   }
 
-  getAttachments() {
-    if (this.attachmentSubscription) {
-      this.attachmentSubscription.unsubscribe();
-    }
-
-    this.attachmentSubscription = this.activatedRoute.params
-      .pipe(
-        switchMap(params => this.attachmentService.getAttachments(get(params, 'id')))
-      ).subscribe((attachments: Array<Attachment>) => this.attachments$.next(attachments));
-  }
-
-  /**
-   * @ignore
-   */
-  downloadAttachment(attachmentId: string, parentId: string) {
-    return this.productInformationService.getAttachmentUrl(attachmentId, parentId);
-  }
-
   confirmOrder(orderId: string, primaryContactId: string) {
     this.isLoading = true;
     this.orderService.acceptOrder(orderId).subscribe((res) => {
       this.isLoading = false;
       if (res) {
         this.exceptionService.showSuccess('ACTION_BAR.ORDER_CONFIRMATION_TOASTR_MESSAGE', 'ACTION_BAR.ORDER_CONFIRMATION_TOASTR_TITLE');
-        this.emailService.orderStatusChangeNotification('CustomerOrderEmailNotificationsTemplate', orderId, primaryContactId).pipe(take(1)).subscribe();
+        this.emailService.statusChangeNotification('CustomerOrderEmailNotificationsTemplate', orderId, primaryContactId).pipe(take(1)).subscribe();
         this.getOrder();
       }
       else
@@ -337,10 +311,6 @@ export class OrderDetailComponent implements OnInit, OnDestroy, AfterViewChecked
 
     if (this.orderSubscription) {
       this.orderSubscription.unsubscribe();
-    }
-
-    if (this.attachmentSubscription) {
-      this.attachmentSubscription.unsubscribe();
     }
 
     if (this.noteSubscription) {

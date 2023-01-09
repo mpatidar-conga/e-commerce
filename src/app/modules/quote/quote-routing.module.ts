@@ -8,6 +8,7 @@ import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
 import { CreateQuoteComponent } from './layout/quote-create/create-quote.component';
 import { QuoteDetailsComponent } from './layout/quote-details/quote-details.component';
+import { DetailsGuard } from '@congacommerce/ecommerce';
 
 const routes: Routes = [
   {
@@ -16,10 +17,11 @@ const routes: Routes = [
   },
   {
     path: ':id',
-    component: QuoteDetailsComponent
+    component: QuoteDetailsComponent,
+    canActivate: [DetailsGuard]
   },
   {
-    path : '',
+    path: '',
     redirectTo: '/my-account/quotes'
   }
 ];

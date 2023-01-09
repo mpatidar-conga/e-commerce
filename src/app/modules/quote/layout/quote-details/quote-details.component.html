@@ -1,4 +1,4 @@
-<apt-detail *ngIf="quote$ | async as quote; else loading" [context]="quote">
+<app-detail *ngIf="quote$ | async as quote; else loading" [context]="quote">
   <div class="detail-header">
     <div class="d-flex d-flex align-items-center mb-2">
       <h3 class="m-0">{{quote?.Proposal_Name}}</h3>
@@ -19,7 +19,7 @@
     <span>{{quote?.Name}}</span>
   </div>
 
-  <apt-detail-section [title]="'DETAILS.QUOTE_SUMMARY' | translate">
+  <app-detail-section [title]="'DETAILS.QUOTE_SUMMARY' | translate">
     <div class="row">
       <div class="col-12 col-md-8">
         <div class="card">
@@ -62,9 +62,9 @@
         <apt-price-summary [record]="quote" [page]="'quotes'"></apt-price-summary>
       </div>
     </div>
-  </apt-detail-section>
+  </app-detail-section>
 
-  <apt-detail-section [title]="'DETAILS.LINE_ITEMS' | translate" class="mt-4">
+  <app-detail-section [title]="'DETAILS.LINE_ITEMS' | translate" class="mt-4">
     <div class="card">
       <div class="card-body">
         <h5 class="py-2">
@@ -86,9 +86,9 @@
         </table>
       </div>
     </div>
-  </apt-detail-section>
+  </app-detail-section>
 
-  <apt-detail-section [title]="'DETAILS.COMMENTS' | translate" class="mt-4">
+  <app-detail-section [title]="'DETAILS.COMMENTS' | translate" class="mt-4">
     <div class="card" *ngIf="noteList$ | async as noteList; else loading">
       <div class="card-body">
         <h5 class="py-2 text-uppercase">
@@ -133,9 +133,9 @@
         </div>
       </div>
     </div>
-  </apt-detail-section>
+  </app-detail-section>
 
-  <apt-detail-section [title]="'DETAILS.ATTACHMENTS' | translate" class="mt-4">
+  <app-detail-section [title]="'DETAILS.ATTACHMENTS' | translate" class="mt-4">
     <div class="card" *ngIf="attachmentList$ | async as attachmentList; else loading">
       <div class="card-body">
         <h5 class="py-2 text-uppercase">
@@ -182,7 +182,7 @@
                 <input id="browse" class="d-none p-5" type="file" (change)="fileChange($event)"
                        data-max-size="26214400" />
               </div>
-              <div class="mt-2" *ngIf="hasSizeError">
+              <div class="mt-2" *ngIf="hasSizeError && file != null">
                 <p class="text-danger">
                   {{'MY_ACCOUNT.QUOTE_DETAIL.ATTACHMENTS.FILE_SIZE_EXCEEDED_ERROR' | translate}}
                 </p>
@@ -206,7 +206,7 @@
         </div>
       </div>
     </div>
-  </apt-detail-section>
+  </app-detail-section>
 
   <ng-template #intimationTemplate>
     <div class="modal-header align-items-center p-0 mx-4 mt-3 border-bottom border-secondary">
@@ -223,7 +223,7 @@
             [translateParams]="{quoteName: quote?.Name}"></span>
     </div>
   </ng-template>
-</apt-detail>
+</app-detail>
 
 <ng-template #loading>
   <div class="d-flex justify-content-center pt-5">

@@ -256,6 +256,18 @@ dl{
 .form-control{
     font-size: inherit;
 }
-.collapse, .collapsing{
-    background-color: $white;
+app-manage-cart apt-line-item-table-row apt-input-field {
+    label.font-weight-bold {
+    margin-top: unset;
+    padding-bottom: 0.2rem;
+    margin-bottom: unset;
+
 }
+ng-select.form-control  {
+    font-size: inherit;
+    margin-bottom: unset;
+    height: 1.8rem;
+}
+
+}
+

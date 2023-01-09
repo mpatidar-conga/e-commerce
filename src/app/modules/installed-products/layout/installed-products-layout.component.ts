@@ -10,12 +10,6 @@ import { ToastrService } from 'ngx-toastr';
 import { DatePipe } from '@angular/common';
 import { ClassType } from 'class-transformer/ClassTransformer';
 
-/**
- * Installed Product Layout is used to set the structure of the installed products page.
- *
- * @example
- * <app-installed-products-layout></app-installed-products-layout>
- */
 @Component({
   selector: 'app-installed-products-layout',
   templateUrl: './installed-products-layout.component.html',
@@ -289,7 +283,7 @@ export class InstalledProductsLayoutComponent implements OnInit, OnDestroy {
         label: 'Renew',
         theme: 'primary',
         validate(record: AssetLineItemExtended, childRecords: Array<AssetLineItemExtended>): boolean {
-          return record.canRenew(childRecords) && !(filter(get(cart, 'LineItems'), (item) => get(item, 'AssetLineItem.Id') ===  record.Id).length > 0);
+          return record.canRenew(childRecords) && !(filter(get(cart, 'LineItems'), (item) => get(item, 'AssetLineItemId') ===  record.Id).length > 0);
         },
         action: (recordList: Array<AObject>): Observable<void> => {
           this.assetModalService.openRenewModal(
@@ -305,7 +299,7 @@ export class InstalledProductsLayoutComponent implements OnInit, OnDestroy {
         label: 'Terminate',
         theme: 'danger',
         validate(record: AssetLineItemExtended, childRecords: Array<AssetLineItemExtended>): boolean {
-          return record.canTerminate(childRecords) && !(filter(get(cart, 'LineItems'), (item) => get(item, 'AssetLineItem.Id') ===  record.Id).length > 0);
+          return record.canTerminate(childRecords) && !(filter(get(cart, 'LineItems'), (item) => get(item, 'AssetLineItemId') ===  record.Id).length > 0);
         },
         action: (recordList: Array<AObject>): Observable<void> => {
           this.assetModalService.openTerminateModal(
@@ -321,7 +315,7 @@ export class InstalledProductsLayoutComponent implements OnInit, OnDestroy {
         label: 'Buy More',
         theme: 'primary',
         validate(record: AssetLineItemExtended, childRecords: Array<AssetLineItemExtended>): boolean {
-          return record.canBuyMore() && !(filter(get(cart, 'LineItems'), (item) => get(item, 'AssetLineItem.Id') ===  record.Id).length > 0);
+          return record.canBuyMore() && !(filter(get(cart, 'LineItems'), (item) => get(item, 'AssetLineItemId') ===  record.Id).length > 0);
         },
         action: (recordList: Array<AObject>): Observable<void> => {
           this.assetModalService.openBuyMoreModal(
@@ -336,7 +330,7 @@ export class InstalledProductsLayoutComponent implements OnInit, OnDestroy {
         label: 'Change Configuration',
         theme: 'primary',
         validate(record: AssetLineItemExtended, childRecords: Array<AssetLineItemExtended>): boolean {
-          return record.canChangeConfiguration() && !(filter(get(cart, 'LineItems'), (item) => get(item, 'AssetLineItem.Id') ===  record.Id).length > 0);
+          return record.canChangeConfiguration() && !(filter(get(cart, 'LineItems'), (item) => get(item, 'AssetLineItemId') ===  record.Id).length > 0);
         },
         action: (recordList: Array<AObject>): Observable<void> => {
           this.assetModalService.openChangeConfigurationModal(
@@ -349,7 +343,6 @@ export class InstalledProductsLayoutComponent implements OnInit, OnDestroy {
     ];
   }
 }
-
 /** @ignore */
 interface AssetListView {
   tableOptions: TableOptions;

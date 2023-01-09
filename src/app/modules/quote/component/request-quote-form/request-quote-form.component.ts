@@ -49,7 +49,7 @@ export class RequestQuoteFormComponent implements OnInit {
         this.quote.BillToAccount = account;
         this.quote.BillToAccountId =  account.Id;
         this.quote.Primary_Contact = get(user, 'Contact');
-        this.contactId = get(user, 'ContactId');
+        this.contactId = this.cart.Proposald?  get(quote[0],'Primary_ContactId') : get(user, 'ContactId');
         if(get(this.cart, 'Proposald.Id')) {
           this.quote = get(this.cart, 'Proposald');
           this.comments = get(quote, '[0].Notes', []);
@@ -76,30 +76,47 @@ export class RequestQuoteFormComponent implements OnInit {
   }
 
   shipToChange() {
-    this.shipToAccount$ = this.accountService.getAccount(this.quote.ShipToAccountId);
-    this.shipToAccount$.pipe(take(1)).subscribe((newShippingAccount) => {
-      this.quote.ShipToAccount = newShippingAccount;
+    if (this.quote.ShipToAccountId) {
+      this.shipToAccount$ = this.accountService.getAccount(this.quote.ShipToAccountId);
+      this.shipToAccount$.pipe(take(1)).subscribe((newShippingAccount) => {
+        this.quote.ShipToAccount = newShippingAccount;
+        this.onQuoteUpdate.emit(this.quote);
+      });
+    } else {
+      this.quote.ShipToAccount = null;
+      this.shipToAccount$= null;
       this.onQuoteUpdate.emit(this.quote);
-    });
+    }
   }
 
   billToChange() {
-    this.billToAccount$ = this.accountService.getAccount(this.quote.BillToAccountId);
-    this.billToAccount$.pipe(take(1)).subscribe((newBillingAccount) => {
-      this.quote.BillToAccount = newBillingAccount;
+    if (this.quote.BillToAccountId) {
+      this.billToAccount$ = this.accountService.getAccount(this.quote.BillToAccountId);
+      this.billToAccount$.pipe(take(1)).subscribe((newBillingAccount) => {
+        this.quote.BillToAccount = newBillingAccount;
+        this.onQuoteUpdate.emit(this.quote);
+      });
+    } else {
+      this.quote.BillToAccount = null;
+      this.billToAccount$= null;
       this.onQuoteUpdate.emit(this.quote);
-    });
-
+    }
   }
 
-  primaryContactChange() {
+primaryContactChange() {
+  if (this.contactId) {
     this.contactService.fetch(this.contactId)
       .pipe(take(1))
       .subscribe((newPrimaryContact: Contact) => {
         this.quote.Primary_Contact = newPrimaryContact;
+        this.quote.Primary_ContactId = newPrimaryContact.Id;
         this.onQuoteUpdate.emit(this.quote);
       });
+  } else {
+    this.quote.Primary_Contact = null;
+    this.onQuoteUpdate.emit(this.quote);
   }
+}
 
   /**
    * Event handler for when the primary contact input changes.

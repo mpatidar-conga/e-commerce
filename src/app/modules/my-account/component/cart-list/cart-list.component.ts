@@ -11,9 +11,6 @@ import { AObject, AFilter, ACondition } from '@congacommerce/core';
 import { CartService, Cart, PriceService } from '@congacommerce/ecommerce';
 import { TableOptions, TableAction, RevalidateCartService } from '@congacommerce/elements';
 
-/**
- * Cart list Component loads and shows all the carts for logged in user.
- */
 @Component({
   selector: 'app-cart-list',
   templateUrl: './cart-list.component.html',

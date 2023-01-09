@@ -1,4 +1,4 @@
-<apt-detail [title]="viewState?.product?.Name" [subtitle]="productCode" [context]="viewState?.product"
+<app-detail [title]="viewState?.product?.Name" [subtitle]="productCode" [context]="viewState?.product"
   *ngIf="viewState$ | async as viewState; else loading">
 
   <div class="constraintAlerts">
@@ -89,7 +89,7 @@
 
   </div>
 
-  <apt-detail-section [title]="'PRODUCT_DETAILS.DETAILS' | translate">
+  <app-detail-section [title]="'PRODUCT_DETAILS.DETAILS' | translate">
     <div class="row">
       <h4 class="text-muted col-12"> {{'PRODUCT_DETAILS.PRODUCT_DETAIL' | translate}} </h4>
       <div class="col-12 col-md-4">
@@ -103,22 +103,22 @@
         </div>
       </div>
     </div>
-  </apt-detail-section>
+  </app-detail-section>
 
-  <apt-detail-section [title]="'PRODUCT_DETAILS.CONFIGURATIONS' | translate"
+  <app-detail-section [title]="'PRODUCT_DETAILS.CONFIGURATIONS' | translate"
     *ngIf="viewState?.product?.HasAttributes || viewState?.product?.HasOptions">
     <div class="row mt-4">
       <h4 class="text-muted col-12"> {{'PRODUCT_DETAILS.CONFIGURATIONS' | translate}} </h4>
       <div class="col-12">
         <apt-constraint-rule-alert [showProductConfig]="true"></apt-constraint-rule-alert>
-        <apt-product-configuration [productId]="viewState?.product?.Id" [relatedTo]="viewState?.relatedTo"
+        <apt-product-configuration [product]="viewState?.product?.Id" [relatedTo]="viewState?.relatedTo"
           [accordion]="true" (click)="configurationChanged = true">
         </apt-product-configuration>
       </div>
     </div>
-  </apt-detail-section>
+  </app-detail-section>
 
-  <apt-detail-section [title]="'PRODUCT_DETAILS.SPECIFICATIONS' | translate"
+  <app-detail-section [title]="'PRODUCT_DETAILS.SPECIFICATIONS' | translate"
     *ngIf="viewState?.product?.ProductFeatureValues?.length > 0">
     <div class="row mt-4">
       <h4 class="text-muted col-12"> {{'PRODUCT_DETAILS.SPECIFICATIONS' | translate}} </h4>
@@ -130,9 +130,9 @@
         </div>
       </div>
     </div>
-  </apt-detail-section>
+  </app-detail-section>
 
-  <apt-detail-section [title]="'PRODUCT_DETAILS.ATTACHMENTS' | translate" *ngIf="(attachments$ | async)?.length > 0">
+  <app-detail-section [title]="'PRODUCT_DETAILS.ATTACHMENTS' | translate" *ngIf="(attachments$ | async)?.length > 0">
     <div class="row mt-4">
       <h4 class="text-muted col-12"> {{'PRODUCT_DETAILS.ATTACHMENTS' | translate}} </h4>
       <div class="col-12">
@@ -143,25 +143,25 @@
         </div>
       </div>
     </div>
-  </apt-detail-section>
+  </app-detail-section>
 
 
   <ng-container *ngIf="recommendedProducts$ | async as recommendedProducts; else loading">
-    <apt-detail-section *ngIf="recommendedProducts.length" [title]="'PRODUCT_DETAILS.RECOMMENDED_PRODUCTS' | translate">
+    <app-detail-section *ngIf="recommendedProducts.length" [title]="'PRODUCT_DETAILS.RECOMMENDED_PRODUCTS' | translate">
       <div class="row mt-4">
         <h4 class="text-muted col-12"> {{'PRODUCT_DETAILS.RECOMMENDED_PRODUCTS' | translate}} </h4>
         <div class="col-12">
           <apt-product-carousel [productList]="recommendedProducts" slides="5"></apt-product-carousel>
         </div>
       </div>
-    </apt-detail-section>
+    </app-detail-section>
   </ng-container>
 
   <apt-product-configuration-summary *ngIf='viewState?.product?.HasOptions || viewState?.product?.HasAttributes'
     [product]="viewState?.product" [relatedTo]="viewState?.relatedTo" [changes]="cartItemList" [preload]="true"
     #productConfigurationSummary position="right">
   </apt-product-configuration-summary>
-</apt-detail>
+</app-detail>
 
 <ng-template #loading>
   <div class="d-flex justify-content-center pt-5">

@@ -34,14 +34,14 @@
             <i class="fas fa-shopping-cart"></i>
             {{'COMMON.CARTS' | translate}}
           </a>
+          <a *ngIf="showFavorites$ | async" class="nav-link" href="javascript:void(0)" [routerLink]="['/my-account/favorites']" [routerLinkActive]="'active'">
+            <i class="fas fa-heart"></i>
+            {{'COMMON.FAVORITES' | translate}}
+          </a>
           <a class="nav-link" href="javascript:void(0)" [routerLink]="['/my-account/addresses']" [routerLinkActive]="'active'">
             <i class="fas fa-address-book"></i>
             {{'COMMON.ADDRESS_BOOK' | translate}}
           </a>
-          <!-- <a class="nav-link" href="javascript:void(0)" [routerLink]="['/my-account/catalog']" [routerLinkActive]="'active'">
-            <span class="oi oi-list-rich"></span>
-            Catalog
-          </a> -->
           <a class="nav-link" href="javascript:void(0)" [routerLink]="['/my-account/settings']" [routerLinkActive]="'active'">
             <i class="fas fa-cog"></i>
             {{'MY_ACCOUNT.SETTINGS' | translate}}

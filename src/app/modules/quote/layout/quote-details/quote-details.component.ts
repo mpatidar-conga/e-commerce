@@ -1,11 +1,11 @@
-import { Component, OnInit, ViewChild, TemplateRef, NgZone, ChangeDetectorRef, OnDestroy } from '@angular/core';
+import { Component, OnInit, ViewChild, TemplateRef, NgZone, ChangeDetectorRef, OnDestroy, ViewEncapsulation } from '@angular/core';
 import {
   UserService, QuoteService, Quote, Order, OrderService, Note, NoteService, AttachmentService,
   ProductInformationService, ItemGroup, LineItemService, Attachment, QuoteLineItemService, Account, AccountService, QuoteLineItem
 } from '@congacommerce/ecommerce';
 import { ActivatedRoute, Router } from '@angular/router';
 import { filter, map, take, mergeMap, switchMap, startWith, tap } from 'rxjs/operators';
-import { get, set, compact, uniq, find, cloneDeep, sum, defaultTo } from 'lodash';
+import { get, set, compact, uniq, find, cloneDeep, sum, defaultTo} from 'lodash';
 import { Observable, of, BehaviorSubject, Subscription, combineLatest } from 'rxjs';
 import { ExceptionService, LookupOptions, RevalidateCartService } from '@congacommerce/elements';
 import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
@@ -16,7 +16,8 @@ import { ACondition, ApiService } from '@congacommerce/core';
 @Component({
   selector: 'app-quote-details',
   templateUrl: './quote-details.component.html',
-  styleUrls: ['./quote-details.component.scss']
+  styleUrls: ['./quote-details.component.scss'],
+  encapsulation: ViewEncapsulation.None
 })
 export class QuoteDetailsComponent implements OnInit, OnDestroy {
 

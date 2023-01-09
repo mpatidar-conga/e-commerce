@@ -2,13 +2,13 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { PaymentMessageRoutingModule } from './payment-message-routing.module';
-import { PaymentMesageComponent } from './layout/payment-message.component';
+import { PaymentMessageComponent } from './layout/payment-message.component';
 
 @NgModule({
   imports: [
     CommonModule,
     PaymentMessageRoutingModule
   ],
-  declarations: [PaymentMesageComponent]
+  declarations: [PaymentMessageComponent]
 })
 export class PaymentMessageModule { }

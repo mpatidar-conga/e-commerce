@@ -3,16 +3,12 @@ import { Component, OnInit } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { take } from 'rxjs/operators';
 import * as moment from 'moment';
-import { clone, assign, find, get, isArray, groupBy, sumBy, omit, zipObject, mapKeys, mapValues, map, bind, includes } from 'lodash';
+import { clone, assign, find, get, isArray, groupBy, sumBy, omit, zipObject, mapValues, map, forOwn, includes, has } from 'lodash';
 
 import { AFilter } from '@congacommerce/core';
 import { QuoteService, Quote, LocalCurrencyPipe } from '@congacommerce/ecommerce';
 import { TableOptions } from '@congacommerce/elements';
 
-/** @ignore */
-/**
- * Loads list of quotes for logged in user.
- */
 @Component({
   selector: 'app-quote-list',
   templateUrl: './quote-list.component.html',
@@ -34,19 +30,20 @@ export class QuoteListComponent implements OnInit {
         prop: 'Approval_Stage'
       },
       {
+        prop: 'RFP_Response_Due_Date'
+      },
+      {
         prop: 'PriceListId'
       },
       {
         prop: 'Grand_Total',
+        label: 'Total Amount',
         value: (record) => {
           return this.currencyPipe.transform(get(find(get(record, 'ProposalSummaryGroups'), { LineType : 'Grand Total'}), 'NetPrice'));
         }
       },
       {
-        prop: 'ExpectedStartDate'
-      },
-      {
-        prop: 'ExpectedEndDate'
+        prop: 'AccountId'
       },
       {
         prop: 'LastModifiedDate'
@@ -116,9 +113,19 @@ export class QuoteListComponent implements OnInit {
             : zipObject([get(data, 'Apttus_Proposal__Approval_Stage__c')], map([get(data, 'Apttus_Proposal__Approval_Stage__c')], key => get(data, 'total_records')))
         );
 
+        const quotesDuedate ={};
+        if(isArray(data)) {
+          forOwn(omit(mapValues(groupBy(data, 'Apttus_Proposal__RFP_Response_Due_Date__c'), s => sumBy(s, 'total_records')), 'null'), (value,key) => {
+              const label = this.generateLabels(key);
+              if(has(quotesDuedate,label)) 
+                value = quotesDuedate[label]+ value;
+              quotesDuedate[label] = value;
+          });
+        }
+
         this.quotesByDueDate$ = of(
           isArray(data)
-            ? omit(mapKeys(mapValues(groupBy(data, 'Apttus_Proposal__RFP_Response_Due_Date__c'), s => sumBy(s, 'total_records')), bind(this.generateLabels, this)), 'null')
+            ? quotesDuedate
             : zipObject([get(data, 'Apttus_Proposal__RFP_Response_Due_Date__c')], map([get(data, 'Apttus_Proposal__RFP_Response_Due_Date__c')], key => get(data, 'total_records')))
         );
       });

@@ -1,15 +1,12 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CategoryService, Category, ProductResult, SearchService, ProductService, Cart, CartService } from '@congacommerce/ecommerce';
-import { get, compact, map, isNil, remove, isEqual, isEmpty } from 'lodash';
+import { get, compact, map, isNil, remove, isEqual, isEmpty, filter, includes, some } from 'lodash';
 import { ACondition, AJoin } from '@congacommerce/core';
 import { Observable, of, BehaviorSubject, Subscription } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
-import { map as rmap, mergeMap } from 'rxjs/operators';
+import { map as rmap, mergeMap, take } from 'rxjs/operators';
 
-/**
- * Product list component shows all the products in a list for user selection.
- */
 @Component({
   selector: 'app-product-list',
   templateUrl: './product-list.component.html',
@@ -73,8 +70,15 @@ export class ProductListComponent implements OnInit, OnDestroy {
   /**
    * @ignore
    */
-  constructor(private activatedRoute: ActivatedRoute, private searchService: SearchService, private categoryService: CategoryService, private router: Router, public productService: ProductService, private translateService: TranslateService,
-    private cartService:CartService) { }
+  constructor(
+    private activatedRoute: ActivatedRoute, 
+    private searchService: SearchService, 
+    private categoryService: CategoryService, 
+    private router: Router, 
+    public productService: ProductService, 
+    private translateService: TranslateService,
+    private cartService:CartService
+  ) { }
 
   /**
    * @ignore
@@ -133,6 +137,7 @@ export class ProductListComponent implements OnInit, OnDestroy {
     ).subscribe(r => {
       this.data$.next(r);
     });
+
   }
 
   /**

@@ -20,7 +20,6 @@ export class AboGuard implements CanActivate {
           }
         }
         else {
-          this.router.navigate(['/']);
           return false;
         }
       }));

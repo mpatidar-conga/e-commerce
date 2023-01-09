@@ -14,7 +14,7 @@
     <div class="col-12 col-sm-6 col-md-4" *ngFor="let address of addressList">
       <div class="card mt-4">
         <div class="card-body">
-          <div class="d-flex justify-content-between">
+          <div class="d-flex justify-content-between text-break">
             <strong>
               <i class="fas fa-check" *ngIf="address.IsDefault"></i>
               {{address.Name}}
@@ -56,9 +56,9 @@
   <ng-template #template>
     <form (ngSubmit)="saveAddress()">
       <div class="modal-header">
-        <h4 class="modal-title pull-left" *ngIf="!addressEdit.Id">{{'MY_ACCOUNT.ADDRESS_BOOK.NEW_ADDRESS' | translate}}
+        <h4 class="modal-title pull-left text-break" *ngIf="!addressEdit.Id">{{'MY_ACCOUNT.ADDRESS_BOOK.NEW_ADDRESS' | translate}}
         </h4>
-        <h4 class="modal-title pull-left" *ngIf="addressEdit.Id">{{'COMMON.EDIT' | translate}} {{addressEdit.Name}}</h4>
+        <h4 class="modal-title pull-left text-break" *ngIf="addressEdit.Id">{{'COMMON.EDIT' | translate}} {{addressEdit.Name}}</h4>
         <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -68,7 +68,7 @@
           <apt-input-field placeholder="{{'COMMON.NAME' | translate}}" [(ngModel)]="addressEdit.Name" field="Name"
             [entity]="addressEdit" name="addressName" [labelClass]="'font-weight-normal'"></apt-input-field>
         </div>
-        <apt-address [(ngModel)]="addressEdit" name="addressInput"></apt-address>
+        <apt-address [ngModel]="addressLocation" name="addressInput"></apt-address>
         <small class="text-danger animated fadeIn" *ngIf="message">{{message}}</small>
       </div>
       <div class="d-flex justify-content-end modal-footer">

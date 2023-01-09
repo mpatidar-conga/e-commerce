@@ -5,26 +5,29 @@
  */
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { OrderDetailsGuard } from '@congacommerce/ecommerce';
 import { environment } from '../environments/environment';
 import { RouteGuard } from './services/route.guard';
 import { ConstraintRuleGuard } from './services/constraint-rule.guard';
 import { AuthGuard } from './services/auth.guard';
 import { AboGuard } from './services/abo.guard';
+import { SessionGuard } from '@congacommerce/ecommerce';
 
 const routes: Routes = [
   {
     path: '',
+    canActivate: [SessionGuard],
     loadChildren: () => import('./modules/home/home.module').then(m => m.HomeModule),
     data: { title: 'B2B E-commerce' }
   },
   {
     path: 'change-password',
+    canActivate: [SessionGuard],
     loadChildren: () => import('./modules/change-password/change-password.module').then(m => m.ChangePasswordModule),
     data: { title: 'Change Password' }
   },
   {
     path: 'products',
+    canActivate: [SessionGuard],
     loadChildren: () => import('./modules/products/products.module').then(m => m.ProductsModule),
     data: { title: 'Product' }
   },
@@ -42,7 +45,7 @@ const routes: Routes = [
   {
     path: 'checkout',
     loadChildren: () => import('./modules/cart/cart.module').then(m => m.CartModule),
-    canActivate: [RouteGuard, ConstraintRuleGuard],
+    canActivate: [RouteGuard, ConstraintRuleGuard, SessionGuard],
     data: { title: 'Checkout' }
   },
   {
@@ -53,6 +56,7 @@ const routes: Routes = [
   },
   {
     path: 'carts',
+    canActivate: [SessionGuard],
     loadChildren: () => import('./modules/manage-cart/manage-cart.module').then(m => m.ManageCartModule),
     data: { title: 'Cart' }
   },
@@ -63,6 +67,7 @@ const routes: Routes = [
   },
   {
     path: 'orders',
+    canActivate: [SessionGuard],
     loadChildren: () => import('./modules/order/order.module').then(m => m.OrderModule),
     data: { title: 'Orders' }
   },
@@ -74,8 +79,15 @@ const routes: Routes = [
   },
   {
     path: 'payment-message',
+    canActivate: [SessionGuard],
     loadChildren: () => import('./modules/payment/payment-message.module').then(m => m.PaymentMessageModule),
     data: { title: 'Payment Message'}
+  },
+  {
+    path: 'favorites',
+    canActivate: [SessionGuard],
+    loadChildren: () => import('./modules/favorite/favorite.module').then(m => m.FavoriteModule),
+    data: { title: 'Favorites'}
   },
   {
     path: '**',

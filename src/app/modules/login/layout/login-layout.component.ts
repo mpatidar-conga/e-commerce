@@ -1,17 +1,13 @@
-import { Component } from '@angular/core';
+import { Component, NgZone } from '@angular/core';
 import { UserService } from '@congacommerce/ecommerce';
 import { CacheService } from '@congacommerce/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { TranslateService } from '@ngx-translate/core';
-import * as _ from 'lodash';
+import {get, last} from 'lodash';
+import { combineLatest } from 'rxjs';
+import { take } from 'rxjs/operators';
 
-/**
- * Login Layout component is used to get the user details and verify it with connected org.
- *
- * @example
- * <app-login-layout></app-login-layout>
- */
 @Component({
   selector: 'app-login-layout',
   templateUrl: './login-layout.component.html',
@@ -31,7 +27,18 @@ export class LoginLayoutComponent {
    * Flag used to show/hide loader
    */
   loading: boolean = false;
-  constructor(private userService: UserService, private router: Router, private toastr: ToastrService, private translateService: TranslateService, private activatedRoute: ActivatedRoute, private cacheService: CacheService) { }
+  /** @ignore */
+  loginMessage: string;
+
+  constructor(
+    private userService: UserService,
+    private router: Router,
+    private toastr: ToastrService,
+    private translateService: TranslateService,
+    private activatedRoute: ActivatedRoute,
+    private cacheService: CacheService,
+    private ngZone: NgZone
+    ) { }
 
   /**
    * This method will check user authenthicity based on given details
@@ -39,19 +46,23 @@ export class LoginLayoutComponent {
   login() {
     this.loading = true;
     /**UserService is used to verify the user and update user details for further use. */
-    this.userService.login(this.username, this.password).subscribe(
-      () => {
-        this.loading = false;
-        this.cacheService.refresh(this.userService.type);
-        (_.get(this.activatedRoute.snapshot.params,'orderId')) ? this.router.navigate(['/orders', _.get(this.activatedRoute.snapshot.params,'orderId')]) : this.router.navigate(['/']);
-      },
-      (e) => {
-        this.loading = false;
-        this.translateService.stream(['LOGIN.INCORRECT_CREDENTIALS_TOASTR_MESSAGE', 'LOGIN.INCORRECT_CREDENTIALS_TOASTR_TITLE']).subscribe((val: string) => {
-          this.toastr.error(val['LOGIN.INCORRECT_CREDENTIALS_TOASTR_MESSAGE'], val['LOGIN.INCORRECT_CREDENTIALS_TOASTR_TITLE']);
-        });
-      }
-    );
+    combineLatest([this.userService.login(this.username, this.password), this.activatedRoute.queryParams])
+    .pipe(take(1))  
+    .subscribe(
+        res =>{
+          if(get(last(res), 'redirectUrl')) {
+            window.location.href = get(last(res), 'redirectUrl');
+            if((!!window.location.hash)) window.location.reload(true);
+          } else
+            window.location.reload(true)
+        },
+        err => this.ngZone.run(() => {
+          this.loading = false;
+          this.translateService.stream('LOGIN').subscribe((val: string) => {
+            this.loginMessage = val['WRONG_CREDENTIALS'];
+          });
+        })
+      );
   }
 
 }

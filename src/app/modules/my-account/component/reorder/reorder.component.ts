@@ -5,8 +5,6 @@ import * as _ from 'lodash';
 import { Observable, combineLatest } from 'rxjs';
 import { ACondition } from '@congacommerce/core';
 import { flatMap, take } from 'rxjs/operators';
-
-/** @ignore */
 @Component({
   selector: 'app-reorder',
   templateUrl: './reorder.component.html',

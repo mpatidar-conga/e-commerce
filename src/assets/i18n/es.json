@@ -1,7 +1,8 @@
 {
     "ERROR": {
-        "OPTION_GROUP" : {
-            "ERROR" : "es_MX Option Group Errors",
+        "RECORD_ERROR" : "es_MX This record has pending errors",
+        "OPTION_GROUP": {
+            "ERROR": "es_MX Option Group Errors",
             "MIN_OPTIONS": "es_MX You must select at least {{value}} options.",
             "MAX_OPTIONS": "es_MX You can select no more than {{value}} options.",
             "MIN_TOTAL_QUANTITY": "es_MX The total minimum quantity is {{value}}.",
@@ -14,7 +15,7 @@
             "SERVER_ERROR": "es_MX Oops something went wrong.",
             "PRICE_CHANGE": "es_MX The price of your cart has been updated",
             "PRICE_CHANGE_TOASTR_TITLE": "es_MX Price Update",
-            "VALIDATE" : "es_MX There are errors in your cart.",
+            "VALIDATE": "es_MX There are errors in your cart.",
             "CONSTRAINT_RULES": "es_MX An item in your cart violated 1 or more constraint rules."
         },
         "CART_ITEM": {
@@ -24,11 +25,17 @@
             "ASSOCIATE_AND_APPLY": "es_MX An error ocurred getting the constraint rules for your cart."
         },
         "PROMOTION": {
-            "INVALID_TOASTR_MESSAGE": "es_MX Promotion {{name}} is not applied.",
-            "INVALID_TOASTR_TITLE": "es_MX Promotion Not Applied"
+            "PROMOTION_OR_COUPON_NOT_AVAILABLE": "es_MX Promotion {{name}} could not be applied.",
+            "INVALID_PROMOTION_TITLE": "es_MX Promotion Not Applied",
+            "INVALID_COUPON_TITLE": "es_MX Coupon Not Applied",
+            "COUPON_CODE_EXPIRED": "es_MX Coupon {{name}} is expired.",
+            "INACTIVE_COUPON_CODE": "es_MX Coupon {{name}} is not valid.",
+            "COUPON_LIMIT_EXCEEDED": "es_MX Coupon {{name}} usage limit is exceeded"
         },
         "APPLICATION_ERROR_TOASTR_TITLE": "es_MX Application Error",
-        "INVALID_QUANTITY": "es_MX Cannot add a quantity less than 1"
+        "INVALID_QUANTITY": "es_MX Cannot add a quantity less than 1",
+        "INACCESSIBLE_ORDER":"es_MX Order not found or you do not have access to this order",
+        "INACCESSIBLE_QUOTE":"es_MX Quote not found or you do not have access to this quote"
     },
     "SUCCESS": {
         "TITLE": "es_MX Success",
@@ -37,12 +44,20 @@
             "ITEM_ADDED_TOASTR_TITLE": "es_MX Item Added"
         },
         "PROMOTION": {
+            "VALID_PROMOTION_TITLE": "es_MX Promotion Applied",
+            "VALID_PROMOTION_MESSAGE": "es_MX Promotion {{name}} is applied successfully",
             "REMOVED_TOASTR_MESSAGE": "es_MX Promotion {{name}} has been removed.",
             "REMOVED_TOASTR_TITLE": "es_MX Promotion Removed"
         },
         "CONFIGURATION_UPDATED": "es_MX Your configuration has been updated.",
         "QUOTE_UPDATED": "es_MX Quote Updated Successfully!",
-        "QUOTE_UPDATE_TITLE": "es_MX Quote Update"
+        "QUOTE_UPDATE_TITLE": "es_MX Quote Update",
+        "FAVORITE": {
+            "TITLE": "es_MX Favorite items added!",
+            "ADD_FAVORITE": "es_MX Added new {{name}} Favorite.",
+            "UPDATE_FAVORITE": "es_MX Updated existing {{name}} Favorite",
+            "ADD_FAVORITE_TO_CART": "es_MX Items from {{name}} were added to the cart."
+        }
     },
     "ASSETS": {
         "TERMINATE_SUCCESS": "es_MX The asset termination has been added to your cart.",
@@ -92,8 +107,12 @@
             "SET_ACTIVE": "es_MX Set Active",
             "CART_CREATION_FAILED": "es_MX Could not create cart. Please contact your administrator."
         },
+        "FAVORITE_DETAIL": {
+            "FAVORITE_SUMMARY": "es_MX Favorite Summary",
+            "INACTIVE": "es_MX Inactive"
+        },
         "ADDRESS_BOOK": {
-            "NEW_ADDRESS": "es_MX New Address",   
+            "NEW_ADDRESS": "es_MX New Address",
             "SET_AS_DEFAULT": "es_MX Set as Default",
             "SAVE_FAILED": "es_MX Failed to save address. Please contact your administrator."
         },
@@ -122,11 +141,11 @@
             "QUOTES_BY_STATUS": "es_MX Quotes By Status",
             "QUOTES_BY_DUE_DATE": "es_MX Quotes By Due Date",
             "TOTAL_QUOTES": "es_MX Total Quotes",
-            "ATTACHMENTS":{
-                "TITLE":"es_MX Attach new file(s)",
-                "INPUT_LABEL":"es_MX Drop files to Attach or",
-                "BROWSE":"es_MX browse",
-                "FILE_SIZE_EXCEEDED_ERROR":"es_MX Size exceeds 25MB",
+            "ATTACHMENTS": {
+                "TITLE": "es_MX Attach new file(s)",
+                "INPUT_LABEL": "es_MX Drop files to Attach or",
+                "BROWSE": "es_MX browse",
+                "FILE_SIZE_EXCEEDED_ERROR": "es_MX Size exceeds 25MB",
                 "NO_ATTACHMENTS": "es_MX No attachments have been added yet",
                 "REMOVE_ATTACHMENT": "es_MX Remove Attachment",
                 "BY": "es_MX by"
@@ -264,7 +283,7 @@
         "YOU_MAY_ALSO_LIKE": "es_MX You may also like",
         "RENEW": "es_MX Renew",
         "BUY_MORE": "es_MX Buy More",
-        "CHANGE_CONFIGURATION" : "es_MX Change Configuration",
+        "CHANGE_CONFIGURATION": "es_MX Change Configuration",
         "TERMINATE": "es_MX Terminate",
         "TERMINATE_ASSETS": "es_MX Terminate Asset(s)",
         "COMPARE": "es_MX Compare",
@@ -280,8 +299,8 @@
         "VIEW_QUOTE": "es_MX View Quote",
         "CREATE_QUOTE": "es_MX Create Quote",
         "MANAGE_CART": "es_MX Manage Cart",
-        "CHANGE_SHIPPING_ADDRESS":"es_MX Change Shipping Address",
-        "CHANGE_BILLING_ADDRESS":"es_MX Change Billing Address",
+        "CHANGE_SHIPPING_ADDRESS": "es_MX Change Shipping Address",
+        "CHANGE_BILLING_ADDRESS": "es_MX Change Billing Address",
         "EDIT_LINE_ITEMS": "es_MX Edit Line Items",
         "PLACE_ORDER": "es_MX Place Order",
         "PLACE_ORDER_PAY": "es_MX Place Order & Pay",
@@ -301,9 +320,19 @@
         "CHECKOUT": "es_MX Checkout",
         "TOTAL_ORDERS": "es_MX Total Orders",
         "ORDER_AMOUNT_BY_STATUS": "es_MX ORDER AMOUNT BY STATUS",
-        "PRICE_NOT_AUTOUPDATED":"es_MX * Prices shown in this page are not auto-updated.",
-        "UPDATE_PRICE":"es_MX Update Prices",
-        "PRICE_ERROR": "es_MX Pricing has failed for your cart. Please retry."
+        "PRICE_NOT_AUTOUPDATED": "es_MX * Prices shown in this page are not auto-updated.",
+        "UPDATE_PRICE": "es_MX Update Prices",
+        "PRICE_ERROR": "es_MX Pricing has failed for your cart. Please retry.",
+        "FAVORITES": "es_MX Favorites",
+        "SELECTIONS": "es_MX Selections",
+        "PRODUCTS": "es_MX Products",
+        "CARTITEMS": "es_MX Cart Items",
+        "SAVE_FAVORITE": "es_MX Save as favorite",
+        "CLONE": "es_MX Clone",
+        "SELECT_ACTION": "es_MX Select action",
+        "CONFIRM": "es_MX Confirm",
+        "EDIT_LAYOUT": "es_MX Edit Layout",
+        "ADDITIONAL_INFORMATION":"es_MX Additional Information"
     },
     "REVALIDATE_CART": {
         "REVALIDATION_REQUIRED": "es_MX Revalidation required",
@@ -319,9 +348,10 @@
         "PRODUCTNAME": "es_MX Product Name",
         "REVALIDATION_WARNING": "es_MX Some items in your cart need to be validated",
         "VALIDATE_CART": "es_MX Validate Cart",
-        "SUCCESSFULLY_REVALIDATED": "es_MX Successfully revalidated"
+        "SUCCESSFULLY_REVALIDATED": "es_MX Successfully revalidated",
+        "REVALIDATION_INFO":"es_MS If you select an optional product, the entire bundle including other optional products too will be revalidated to maintain sanctity of the bundle product"
     },
-    "CREATE_QUOTE":{
+    "CREATE_QUOTE": {
         "QUOTE_SUMMARY": "es_MX QUOTE SUMMARY",
         "QUOTE_TITLE": "es_MX Quote Title",
         "EXPECTED_RESPONSE_DATE": "es_MX Expected Response Date",
@@ -329,15 +359,15 @@
         "SHIP_TO_ACCOUNT": "es_MX Ship to Account",
         "BILL_TO_ACCOUNT": "es_MX Bill to Account",
         "SEARCH_CONTACTS": "es_MX Search Contacts",
-        "FINALIZE_AND_SUBMIT" : "es_MX Finalize & Submit Quote",
+        "FINALIZE_AND_SUBMIT": "es_MX Finalize & Submit Quote",
         "PRIMARY_CONTACT_IS_MANDATORY": "ES_mx Primary contact is mandatory"
     },
     "QUOTE_CONFIRMATION_MODAL": {
-        "THANK_YOU":"es_MX Thank You",
+        "THANK_YOU": "es_MX Thank You",
         "QUOTE_REQUEST": "es_MX Quote Request",
-        "QUOTE_CONFIRMATION_MSG":"es_MX Your quote has been send for review and assigned to the seller {{Sellername}}. The Expected Response Date is {{RFP_value}}",
+        "QUOTE_CONFIRMATION_MSG": "es_MX Your quote has been send for review and assigned to the seller {{Sellername}}. The Expected Response Date is {{RFP_value}}",
         "QUOTE_CONFIRMATION_Update_MSG": "es_MX Your updated quote has been send for review and assigned to the seller {{Sellername}}. The Expected Response Date is {{RFP_value}}",
-        "QUOTE_CONFIRMATION_NO":"es_MX Your Quote Number is :",
+        "QUOTE_CONFIRMATION_NO": "es_MX Your Quote Number is :",
         "REVIEW_YOUR_QUOTE": "es_MX REVIEW YOUR QUOTE"
     },
     "BUYMORE": {
@@ -444,7 +474,7 @@
             "ORDER_CONFIRMATION_MESSAGE": "es_MX Your order has been placed successfully!",
             "ORDER_NUMBER": "es_MX Order Number :",
             "ORDER_SUBTITLE": "es_MX Please make the payment to complete the checkout process.",
-            "ENTER_PO_NUMBER":"es_MX Enter a purchase order number..."
+            "ENTER_PO_NUMBER": "es_MX Enter a purchase order number..."
         },
         "SUBMIT_ORDER": "es_MX Submit Order",
         "CONTINUE_SHIPPING": "es_MX Continue Shopping",
@@ -503,7 +533,7 @@
             "CHECKOUT": "es_MX Checkout",
             "DISCARD_CHANGES": "es_MX Discard Changes",
             "FINALIZE_AND_SUBMIT": "es_MX Finalize & Submit",
-            "TAX":"es_MX Estimated Tax"
+            "TAX": "es_MX Estimated Tax"
         },
         "CART_TABLE": {
             "ITEMS_IN_YOURCART": "es_MX Items in your cart",
@@ -514,7 +544,7 @@
             "PRODUCT_CONFIGURATION": "es_MX Product Configuration"
         },
         "DISCARD_CHANGES_MODAL": {
-            "DISCARD_CHANGES_TITLE":"es_MX Discard your changes",
+            "DISCARD_CHANGES_TITLE": "es_MX Discard your changes",
             "DISCARD_CHANGES_Message": "es_MX All yur changes will be lost.",
             "DISCARD_CHANGES_CONFIRMATION": "es_MX Do you want to discard your changes and go back to the Quote Details page?",
             "DISCARD_CHANGES": "es_MX YES, DISCARD CHANGES"
@@ -583,7 +613,8 @@
         "APPLIED_PROMOTIONS": "es_MX Applied Promotions",
         "TOTAL_PROMOTION_AMOUNT": "es_MX Total Promotion Amount",
         "PROMOTION_APPLIEDTO": "es_MX Promotions Applied To",
-        "APPLIED_PROMOTION": "es_MX applied to the following items in the cart."
+        "APPLIED_PROMOTION": "es_MX applied to the following items in the cart.",
+        "COUPON_CODE": "es_MX Coupon Code"
     },
     "LOGIN": {
         "PLS_SIGNIN": "es_MX Please sign in",
@@ -663,8 +694,8 @@
         "RENEWAL_END_DATE": "es_MX Renewal End Date",
         "USE_EXISTING_TERM": "es_MX Use Existing Term",
         "TERMINATION_DATE": "es_MX Termination Date",
-        "NEW_START_DATE":"es_MX New Start Date",
-        "NEW_END_DATE":"es_MX New End Date",
+        "NEW_START_DATE": "es_MX New Start Date",
+        "NEW_END_DATE": "es_MX New End Date",
         "INVALID_TERMINATION_DATE": "es_MS Termination date must be between start and end date of all selected assets."
     },
     "APP": {
@@ -676,6 +707,7 @@
     },
     "DETAILS": {
         "ORDER_SUMMARY": "es_MX ORDER SUMMARY",
+        "FAVORITE_SUMMARY": "es_MX FAVORITE SUMMARY",
         "LINE_ITEMS": "es_MX LINE ITEMS",
         "COMMENTS": "es_MX COMMENTS",
         "ATTACHMENTS": "es_MX ATTACHMENTS",
@@ -715,23 +747,23 @@
         "ERROR_MSG": "es_MX Card not added due to following reason: ",
         "DELETE_TITLE": "es_MX Card Deleted",
         "DELETE_MSG": "es_MX Your Credit/Debit card is deleted.",
-        "Detail_Item1":"es_MX Your Saved Cards",
-        "Detail_Item2":"es_MX Name on card",
-        "Detail_Item3":"es_MX Expires on",        
-        "Detail_Ending":"es_MX ending",   
-        "DEFAULT_TITLE":"es_MX Default Card",   
-        "DEFAULT_MSG":"es_MX Cannot delete default method",
-        "Expired_MSG"   :"es_MX Expired",
+        "Detail_Item1": "es_MX Your Saved Cards",
+        "Detail_Item2": "es_MX Name on card",
+        "Detail_Item3": "es_MX Expires on",
+        "Detail_Ending": "es_MX ending",
+        "DEFAULT_TITLE": "es_MX Default Card",
+        "DEFAULT_MSG": "es_MX Cannot delete default method",
+        "Expired_MSG": "es_MX Expired",
         "CHOOSE_PAYMENT_METHOD": "es_MX Choose a payment method",
         "MAKE_PAYMENT": "es_MX Make Payment"
     },
-    "CONFIGURATION" : {
-        "EMPTY" : "es_MX This product has not been configured",
-        "NO_CONFIGURATION" : "es_MX This product does not have any configuration options"
+    "CONFIGURATION": {
+        "EMPTY": "es_MX This product has not been configured",
+        "NO_CONFIGURATION": "es_MX This product does not have any configuration options"
     },
-    "TABLE" : {
-        "SEARCH" : "es_MX Search",
-        "SELECTED" : "es_MX Selected",
+    "TABLE": {
+        "SEARCH": "es_MX Search",
+        "SELECTED": "es_MX Selected",
         "OF": "es_MX of",
         "PER_PAGE": "es_MX per page",
         "NO_DATA_TO_DISPLAY": "es_MX No data to display"
@@ -742,6 +774,18 @@
         "CARTS": "es_MX Carts",
         "PROPOSAL": "es_MX Proposal",
         "ORDER": "es_MX Order",
-        "CART": "es_MX Cart"
+        "CART": "es_MX Cart",
+        "FAVORITES": "es_MX Favorites"
+    },
+    "FAVORITE": {
+        "VISIBILITY": "es_MX Visibility",
+        "FAVORITE_MODAL": {
+            "ADD_FAVORITE": "es_MX Add Favorite",
+            "SEARCH_OR_ADD_FAV": "es_MX Search or add new favorite",
+            "MAKE_PUBLICLY_VISIBILE": "es_MX Make publicly visible",
+            "ADD_NEW_FAVORITE": "es_MX Add New <strong>{{search}}</strong> Favorite",
+            "ENTER_FAVORITE_NAME": "es_MX Enter favorite name...",
+            "ADD_TO_EXISTING": "es_MX Add to existing"
+        }
     }
 }

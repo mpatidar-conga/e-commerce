@@ -14,7 +14,7 @@ import { CartSummaryComponent } from './component/cart-summary/cart-summary.comp
 import { DatepickerModule, BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { ProductCarouselModule, ConfigurationSummaryModule, PriceModule, PromotionModule, InputDateModule,
         LineItemTableRowModule, BreadcrumbModule, IconModule, TaxPopHoverModule, PriceSummaryModule,
-        AlertModule, ConstraintRuleModule } from '@congacommerce/elements';
+        AlertModule, ConstraintRuleModule, SelectAllModule } from '@congacommerce/elements';
 import { TranslateModule } from '@ngx-translate/core';
 import { QuoteModule } from '../quote/quote.module';
 
@@ -45,7 +45,8 @@ import { QuoteModule } from '../quote/quote.module';
     PriceSummaryModule,
     TaxPopHoverModule,
     AlertModule,
-    ConstraintRuleModule
+    ConstraintRuleModule,
+    SelectAllModule
   ],
   declarations: [ManageCartComponent, CartTableComponent, CartSummaryComponent]
 })

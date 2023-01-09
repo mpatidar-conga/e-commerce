@@ -6,9 +6,6 @@ import { Order, OrderLineItem, OrderService, ProductService, Product } from '@co
 import * as _ from 'lodash';
 import { flatMap } from 'rxjs/operators';
 
-/**
- * Component to load individual order detail. Takes order name as input parameter and lods that order.
- */
 @Component({
   selector: 'app-order-detail',
   templateUrl: './order-detail.component.html',

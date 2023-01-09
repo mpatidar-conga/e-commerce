@@ -33,7 +33,7 @@ registerLocaleData(localeFr, 'fr-FR', localeFrExtra);
 // Translations
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { AboGuard } from './services/abo.guard';
-import { OrderDetailsGuard } from '@congacommerce/ecommerce';
+import { SessionGuard, DetailsGuard } from '@congacommerce/ecommerce';
 
 
 @NgModule({
@@ -54,7 +54,7 @@ import { OrderDetailsGuard } from '@congacommerce/ecommerce';
     HttpClientModule,
     ComponentModule
   ],
-  providers: [RouteGuard, AuthGuard, AboGuard, ConfigureGuard, ConstraintRuleGuard, OrderDetailsGuard],
+  providers: [RouteGuard, AuthGuard, AboGuard, ConfigureGuard, ConstraintRuleGuard, SessionGuard, DetailsGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

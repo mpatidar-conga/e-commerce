@@ -7,9 +7,6 @@ import { ACondition, AFilter } from '@congacommerce/core';
 import { OrderService, Order, UserService, User } from '@congacommerce/ecommerce';
 import { TableOptions } from '@congacommerce/elements';
 
-/**
- * This component is for Apttus-ecommerce dashboard. This gives you glimpse of orders and total spending done for logged in user profile.
- */
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',

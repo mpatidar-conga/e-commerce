@@ -13,6 +13,7 @@ import { WishlistsComponent } from './component/wishlists/wishlists.component';
 import { AddressBookComponent } from './component/address-book/address-book.component';
 import { SettingsComponent } from './component/settings/settings.component';
 import { CartListComponent } from './component/cart-list/cart-list.component';
+import { FavoriteListComponent } from './component/favorite-list/favorite-list.component';
 
 
 
@@ -48,6 +49,10 @@ const routes: Routes = [
       {
         path : 'carts',
         component : CartListComponent
+      },
+      {
+        path : 'favorites',
+        component : FavoriteListComponent
       },
       {
         path : '',

@@ -1,11 +1,11 @@
 
-import {combineLatest,  Observable } from 'rxjs';
-import {mergeMap, map, filter} from 'rxjs/operators';
+import { combineLatest,  Observable } from 'rxjs';
+import { mergeMap, map, filter } from 'rxjs/operators';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router, NavigationEnd, ActivatedRoute } from '@angular/router';
 import { Title } from '@angular/platform-browser';
-import * as _ from 'lodash';
-import { ProductSelectionService } from '@congacommerce/elements';
+import { get } from 'lodash';
+import { BatchSelectionService } from '@congacommerce/elements';
 
 @Component({
   selector: 'app-root',
@@ -27,7 +27,7 @@ export class AppComponent implements OnInit, OnDestroy {
   constructor(private titleService: Title,
     private router: Router,
     private activatedRoute: ActivatedRoute,
-    private productSelectionService: ProductSelectionService) {
+    private BatchSelectionService: BatchSelectionService) {
   }
 
   ngOnInit() {
@@ -43,14 +43,17 @@ export class AppComponent implements OnInit, OnDestroy {
       .subscribe(([data, params]) => {
         if (params && Object.keys(params).length > 0)
           this.titleService.setTitle('Conga: ' + params[Object.keys(params)[0]]);
-        else if (_.get(data, 'title'))
-          this.titleService.setTitle('Conga: ' + _.get(data, 'title'));
+        else if (get(data, 'title'))
+          this.titleService.setTitle('Conga: ' + get(data, 'title'));
         else
           this.titleService.setTitle('Conga: B2B E-commerce');
       });
 
-    this.showDrawer$ = this.productSelectionService.getSelectedProducts()
-      .pipe(map(productList => _.get(productList, 'length', 0) > 0));
+    this.showDrawer$ = combineLatest([
+      this.BatchSelectionService.getSelectedProducts(),
+      this.BatchSelectionService.getSelectedLineItems()
+    ])
+      .pipe(map(([productList, lineItemList]) => get(productList, 'length', 0) > 0 || get(lineItemList, 'length', 0) > 0));
   }
 
   ngOnDestroy() {

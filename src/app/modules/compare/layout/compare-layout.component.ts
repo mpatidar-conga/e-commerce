@@ -3,16 +3,9 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { map } from 'rxjs/operators';
 import { ConfigurationService, ACondition } from '@congacommerce/core';
 import { ProductService, Product,  Cart, CartService } from '@congacommerce/ecommerce';
-import { ProductDrawerService, ProductSelectionService} from '@congacommerce/elements';
+import { ProductDrawerService, BatchSelectionService} from '@congacommerce/elements';
 import { Observable } from 'rxjs';
 
-
-/**
- * The compare layout component is a wrapper component for the product comparison component.
- * It is used to pass appropriate information to the product comparison component and will navigate to the home screen when there isn't sufficient data to compare.
- * @example
- * <app-compare-layout></app-compare-layout>
- */
 @Component({
   selector: 'app-compare-layout',
   templateUrl: './compare-layout.component.html',
@@ -36,7 +29,7 @@ export class CompareLayoutComponent implements OnInit, OnDestroy {
   */
    cart$: Observable<Cart>;
 
-  constructor(private config: ConfigurationService, private activatedRoute: ActivatedRoute, private cartService: CartService, private router: Router, private productService: ProductService, private productSelectionService: ProductSelectionService, private productDrawerService: ProductDrawerService) {
+  constructor(private config: ConfigurationService, private activatedRoute: ActivatedRoute, private cartService: CartService, private router: Router, private productService: ProductService, private BatchSelectionService: BatchSelectionService, private productDrawerService: ProductDrawerService) {
     this.identifier = this.config.get('productIdentifier');
   }
 
@@ -62,7 +55,7 @@ export class CompareLayoutComponent implements OnInit, OnDestroy {
         this.subs.push(this.productService.getProducts(null, null, null, null, null, null, conditions).pipe(map(res => res.Products)).subscribe(products => {
           const tableProducts = products.filter(product => newIdentifiers.includes(product[this.identifier]));
           this.products = tableProducts;
-          this.productSelectionService.setSelectedProducts(tableProducts);
+          this.BatchSelectionService.setSelectedProducts(tableProducts);
           if (newIdentifiers.length < 2) this.router.navigateByUrl('/');
           this.identifiers = tableProducts.map(product => product[this.identifier]);
           this.productDrawerService.closeDrawer();

@@ -12,15 +12,19 @@
         <div class="px-4">
             <div class="row">
                 <div class="col-12 col-md-8 mb-4">
-                    <div class="d-block table-responsive card">
-                        <div class="card-header">
+                    <div class="d-block card">
+                        <div class="card-header d-flex justify-content-between align-items-center">
                             <h4 class="mb-0">
                                 <span *ngIf="view?.cart?.Proposald?.Id; else manageCart">{{view?.cart?.Proposald.Name}} /
                                     {{'COMMON.EDIT_LINE_ITEMS' | translate }}</span>
                                 <ng-template #manageCart>
                                     <span>{{'MANAGE_CART.CART_TABLE.ITEMS_IN_YOURCART' | translate }}</span>
                                 </ng-template>
-                            </h4>    
+                            </h4>
+                            <span class="d-flex text-primary pt-1 align-items-center">
+                                <apt-line-item-menu></apt-line-item-menu>
+                                <apt-select-all [items]="primaryLI"></apt-select-all>
+                            </span>
                         </div>
                         <table class="table" *ngIf="view?.lineItems?.length > 0; else empty">
                             <tbody>
@@ -42,7 +46,7 @@
                     </div>
                 </div>
                 <div class="col-12 col-md-4">
-                    <apt-price-summary [record]="view?.cart" [page]="'carts'"></apt-price-summary>
+                    <apt-price-summary [record]="view?.cart" [page]="'carts'" (onFinalizeQuote)="createQuote()"></apt-price-summary>
                     <apt-promotion class="mt-3" [cart]="view?.cart" ></apt-promotion>
                 </div>
             </div>

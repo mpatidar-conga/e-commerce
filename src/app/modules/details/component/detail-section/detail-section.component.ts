@@ -4,7 +4,7 @@ import { Component, OnInit, Input, ElementRef, HostBinding } from '@angular/core
  * @ignore
  */
 @Component({
-  selector: 'apt-detail-section',
+  selector: 'app-detail-section',
   templateUrl: './detail-section.component.html',
   styleUrls: ['./detail-section.component.scss']
 })
@@ -21,6 +21,6 @@ export class DetailSectionComponent implements OnInit {
     element.nativeElement.classList.add('fadeIn');
   }
 
-  ngOnInit() {}
+  ngOnInit() { }
 
 }

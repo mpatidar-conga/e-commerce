@@ -2,17 +2,6 @@ import { Component, Input, OnChanges } from '@angular/core';
 import { Order, Quote, AttachmentService } from '@congacommerce/ecommerce';
 import { take } from 'rxjs/operators';
 
-/**
- * Attachment component is used to upload files of any type
- * image formats - .png,.jpg,.jpeg,.gif
- * document files - .pdf,.doc,.docx
- * html files .htm,.html
- *  @example
- * <app-attachment
- * [item] = 'Order | Quote'
- * ></app-attachment>
- */
-
 @Component({
   selector: 'app-attachment',
   templateUrl: './attachment.component.html',

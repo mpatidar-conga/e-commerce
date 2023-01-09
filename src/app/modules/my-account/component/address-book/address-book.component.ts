@@ -1,13 +1,11 @@
-import { Component, OnInit, TemplateRef, NgZone } from '@angular/core';
+import { Component, OnInit, TemplateRef, NgZone,ChangeDetectionStrategy} from '@angular/core';
 import { AccountLocationService, AccountLocation } from '@congacommerce/ecommerce';
 import { Observable } from 'rxjs';
 import { BsModalService } from 'ngx-bootstrap/modal';
 import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
 import { TranslateService } from '@ngx-translate/core';
 import * as _ from 'lodash';
-/**
- * Address book component for managing list of addresses. Can  Add, Edit, Delete and Set any address as default.
- */
+
 @Component({
   selector: 'app-address-book',
   templateUrl: './address-book.component.html',
@@ -19,7 +17,9 @@ import * as _ from 'lodash';
       left: auto !important;
       right: 0px !important;
     }
-  `]
+  `],
+  providers: [],
+  changeDetection: ChangeDetectionStrategy.Default
 })
 export class AddressBookComponent implements OnInit {
   modalRef: BsModalRef;
@@ -28,6 +28,7 @@ export class AddressBookComponent implements OnInit {
    */
   addressList$: Observable<Array<AccountLocation>>;
   addressEdit: AccountLocation;
+  addressLocation: AccountLocation;
   loading: boolean = false;
   message: string = null;
 
@@ -49,6 +50,7 @@ export class AddressBookComponent implements OnInit {
    */
   newAddress(template: TemplateRef<any>) {
     this.addressEdit = new AccountLocation();
+    this.addressLocation = this.addressEdit;
     this.message = null;
     this.modalRef = this.modalService.show(template, { class : 'modal-lg'});
   }
@@ -58,7 +60,9 @@ export class AddressBookComponent implements OnInit {
   */
   saveAddress(){
     this.ngZone.run(() => this.loading = true);
-    this.accountLocationService.saveLocationToAccount(this.addressEdit)
+    const requestBody = _.cloneDeep(this.addressLocation);
+    requestBody.Name= this.addressEdit.Name;
+    this.accountLocationService.saveLocationToAccount(requestBody)
       .subscribe(
         res => {
           this.loading = false;
@@ -105,6 +109,7 @@ export class AddressBookComponent implements OnInit {
    */
   edit(location: AccountLocation, template: TemplateRef<any>){
     this.addressEdit = location;
-    this.modalRef = this.modalService.show(template);
+    this.addressLocation = _.cloneDeep(this.addressEdit);
+    this.modalRef = this.modalService.show(template, { class : 'modal-lg'});
   }
 }

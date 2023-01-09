@@ -1,14 +1,16 @@
 import { Component, OnInit } from '@angular/core';
+import { last } from 'lodash';
 
 @Component({
   selector: 'app-payment-message',
   template: ``
 })
-export class PaymentMesageComponent implements OnInit {
+export class PaymentMessageComponent implements OnInit {
 
-  constructor() {}
+  constructor() { }
 
-   ngOnInit(){
-    window.parent.window.postMessage({'payment':'true'}, `${window.location.href}`);
-   }
+  ngOnInit() {
+    const paymentStatus = last(window.location.hash.split('='));
+    window.parent.window.postMessage({ 'paymentStatus': paymentStatus }, `${window.location.href}`);
+  }
 }

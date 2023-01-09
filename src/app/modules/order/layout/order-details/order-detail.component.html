@@ -1,4 +1,4 @@
-<apt-detail *ngIf="order$ | async as order; else loading" [context]="order">
+<app-detail *ngIf="order$ | async as order; else loading" [context]="order">
 
   <div class="detail-header py-4">
     <div class="d-flex align-items-center mb-2">
@@ -10,7 +10,7 @@
     </div>
   </div>
 
-  <apt-detail-section [title]="'DETAILS.ORDER_SUMMARY' | translate">
+  <app-detail-section [title]="'DETAILS.ORDER_SUMMARY' | translate">
     <div class="row">
       <div class="col-12 col-md-8">
         <div class="card">
@@ -46,9 +46,9 @@
         <apt-price-summary [record]="order" [page]="'orders'" [showStatus]="false"></apt-price-summary>
       </div>
     </div>
-  </apt-detail-section>
+  </app-detail-section>
 
-  <apt-detail-section [title]="'DETAILS.LINE_ITEMS' | translate" class="mt-4">
+  <app-detail-section [title]="'DETAILS.LINE_ITEMS' | translate" class="mt-4">
     <div class="card">
       <div class="card-body">
         <h5 class="py-2">
@@ -69,10 +69,10 @@
         </table>
       </div>
     </div>
-  </apt-detail-section>
+  </app-detail-section>
 
   <!-- COMMENT SECTION     -->
-  <apt-detail-section [title]="'DETAILS.COMMENTS' | translate" class="mt-4">
+  <app-detail-section [title]="'DETAILS.COMMENTS' | translate" class="mt-4">
     <div class="card" *ngIf="noteList$ | async as noteList; else loading">
       <div class="card-body">
         <h5 class="py-2 text-uppercase">
@@ -117,47 +117,16 @@
         </div>
       </div>
     </div>
-  </apt-detail-section>
+  </app-detail-section>
 
-  <apt-detail-section [title]="'DETAILS.ATTACHMENTS' | translate" class="mt-4">
-    <div class="card" *ngIf="attachments$ | async as attachments; else loading">
+  <app-detail-section [title]="'DETAILS.ATTACHMENTS' | translate" class="mt-4">
+    <div class="card">
       <div class="card-body">
-        <h5 class="py-2 text-uppercase">
-          {{'DETAILS.ATTACHMENTS' | translate}}
-          <span *ngIf="attachments.length > 0">({{attachments.length}})</span>
-        </h5>
-        <div class="row">
-          <div class="col-12 col-md-6 attachment-container">
-            <ng-scrollbar>
-              <ng-container *ngIf="attachments.length > 0; else emptyAttachments">
-                <div class="mb-2 hide-hscroll" *ngFor="let attachment of attachments">
-                  <div class="d-flex">
-                    <div class="col-md-6">
-                      <div class="d-flex justify-content-between">
-                        <a class="text-underline" href="{{downloadAttachment(attachment.Id, order.Id)}}" target="_blank">{{attachment?.Name}}</a>
-                        <span>{{(attachment?.BodyLength/1024).toFixed(2)}} KB</span>
-                      </div>
-                    </div>
-                    <div class="col-md-6">{{'MY_ACCOUNT.QUOTE_DETAIL.ATTACHMENTS.BY' | translate}}
-                      <span class="pl-2">{{attachment?.CreatedBy?.Name}},</span>
-                      <span class="pl-3">{{attachment?.CreatedDate | date:'short'}}</span>
-                    </div>
-                  </div>
-                </div>
-              </ng-container>
-              <ng-template #emptyAttachments>
-                <div class="d-flex align-items-center justify-content-center flex-column h-100 text-muted">
-                  <i class="fa fa-4x fa-file-o mb-2"></i>
-                  {{'MY_ACCOUNT.QUOTE_DETAIL.ATTACHMENTS.NO_ATTACHMENTS' | translate}}
-                </div>
-              </ng-template>
-            </ng-scrollbar>
-          </div>
-        </div>
+        <apt-files [recordId]="order.Id" class="d-block w-100"></apt-files>
       </div>
     </div>
-  </apt-detail-section>
-</apt-detail>
+  </app-detail-section>
+</app-detail>
 
 <ng-template #loading>
   <div class="d-flex justify-content-center pt-5">

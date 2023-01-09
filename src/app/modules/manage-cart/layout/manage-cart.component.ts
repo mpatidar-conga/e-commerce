@@ -1,8 +1,9 @@
 import { Component, OnInit, TemplateRef, ViewChild, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
-import { Cart, CartService, Product, ConstraintRuleService, CartItemService, ItemGroup, LineItemService, OrderLineItem, QuoteLineItem } from '@congacommerce/ecommerce';
+import { Cart, CartItem, CartService, Product, ConstraintRuleService, CartItemService, ItemGroup, LineItemService, OrderLineItem, QuoteLineItem } from '@congacommerce/ecommerce';
 import { Observable, combineLatest } from 'rxjs';
 import { map as rmap } from 'rxjs/operators';
-import { get } from 'lodash';
+import { get, filter } from 'lodash';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-manage-cart',
@@ -10,9 +11,7 @@ import { get } from 'lodash';
   styleUrls: ['./manage-cart.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-/**
- * Manage Cart component is used to show the list of cart line item(s)  and summary of the cart.
- */
+
 export class ManageCartComponent implements OnInit {
 
   @ViewChild('discardChangesTemplate') discardChangesTemplate: TemplateRef<any>;
@@ -21,10 +20,12 @@ export class ManageCartComponent implements OnInit {
    * Observable of the information for rendering this view.
    */
   view$: Observable<ManageCartState>;
+  primaryLI: Array<CartItem> = [];
 
   constructor(private cartService: CartService, 
               private cartItemService: CartItemService, 
-              private crService: ConstraintRuleService, 
+              private crService: ConstraintRuleService,
+              private router: Router, 
               private cdr: ChangeDetectorRef) { }
 
   ngOnInit() {
@@ -33,6 +34,7 @@ export class ManageCartComponent implements OnInit {
       this.crService.getRecommendationsForCart())
       .pipe(
         rmap(([cart, products]) => {
+          this.primaryLI = filter(get(cart, 'LineItems'), (i) => i.IsPrimaryLine && i.LineType === 'Product/Service');
           return {
             cart: cart,
             lineItems: LineItemService.groupItems(get(cart, 'LineItems')),
@@ -44,6 +46,10 @@ export class ManageCartComponent implements OnInit {
 
   trackById(index, record): string {
     return get(record, 'MainLine.Id');
+  }
+
+  createQuote(){
+    this.router.navigate(['/proposals/create']);
   }
 }
 

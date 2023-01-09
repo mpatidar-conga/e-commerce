@@ -1,23 +1,19 @@
 /**
- * Apttus Digital Commerce
- *
- * Dedicated routing module for the order module.
+ * Dedicated routing module for the favorite module.
  */
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
-import { OrderDetailComponent } from './layout/order-details/order-detail.component';
-import { DetailsGuard } from '@congacommerce/ecommerce';
+import { FavoriteDetailsComponent } from './layout/favorite-details/favorite-details.component';
 
 const routes: Routes = [
   {
     path: ':id',
-    component: OrderDetailComponent,
-    canActivate: [DetailsGuard]
+    component: FavoriteDetailsComponent
   },
   {
     path: '',
-    redirectTo: '/my-account/orders',
+    redirectTo: '/my-account/favorites',
     pathMatch: 'full'
   }
 ];
@@ -32,4 +28,4 @@ const routes: Routes = [
   ],
   exports: [RouterModule]
 })
-export class OrderRoutingModule { }
+export class FavoriteRoutingModule { }

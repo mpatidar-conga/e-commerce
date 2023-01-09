@@ -13,7 +13,8 @@ import {
   IconModule,
   AlertModule,
   TableModule,
-  ChartModule
+  ChartModule,
+  FilesModule
 } from '@congacommerce/elements';
 import { OrderRoutingModule } from './order-routing.module';
 import { DetailsModule } from '../details/details.module';
@@ -50,7 +51,8 @@ import { OrderDetailComponent } from './layout/order-details/order-detail.compon
     InputFieldModule,
     DataFilterModule,
     IconModule,
-    AlertModule
+    AlertModule,
+    FilesModule
   ]
 })
 export class OrderModule { }

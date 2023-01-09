@@ -13,17 +13,6 @@ import { TranslateService } from '@ngx-translate/core';
 import { ConfigurationService } from '@congacommerce/core';
 import { ExceptionService, PriceSummaryComponent, BreadcrumbLink } from '@congacommerce/elements';
 
-/**
- * Cart component, contains details such as
- *
- * Addresses (Billing/Shipping),
- * Payment Method (Card, PO),
- * Cart Summary (line items in current cart)
- *
- * Example Usage:
- * @example
- * <app-cart></app-cart>
- */
 @Component({
   selector: 'app-cart',
   templateUrl: './cart.component.html',
