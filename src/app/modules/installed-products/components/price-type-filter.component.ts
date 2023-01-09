@@ -82,28 +82,17 @@ import { AssetLineItem } from '@congacommerce/ecommerce';
   `]
 })
 export class PriceTypeFilterComponent {
-  /**
-   * Event emitter for the value of the filter.
-   */
+
   @Output() value: EventEmitter<AFilter> = new EventEmitter();
   private eventMap = {
-    /**
-     * Filter for 'One Time' price type assets.
-     */
+
     'One Time': new AFilter(AssetLineItem, [new ACondition(AssetLineItem, 'PriceType', 'Equal', 'One Time')]),
-    /**
-     * Filter for 'Recurring' price type assets.
-     */
+
     Recurring: new AFilter(AssetLineItem, [new ACondition(AssetLineItem, 'PriceType', 'Equal', 'Recurring')]),
-    /**
-     * Filter for 'Usage' price type assets.
-     */
+
     Usage: new AFilter(AssetLineItem, [new ACondition(AssetLineItem, 'PriceType', 'Equal', 'Usage')])
   };
-  /**
-   * Event handler for when a checkbox value has been changed.
-   * @param event Event object that was fired.
-   */
+
   handleCheckChange(event: any) {
     this.value.emit(this.eventMap[event.target.value]);
   }

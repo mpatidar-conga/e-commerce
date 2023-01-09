@@ -16,13 +16,11 @@ export class SettingsComponent implements OnInit {
 
   account$: Observable<Account>;
 
-  /** @ignore */
   constructor(private userService: UserService,
-              private accountService: AccountService,
-              private exceptionService: ExceptionService) {
+    private accountService: AccountService,
+    private exceptionService: ExceptionService) {
   }
 
-  /** @ignore */
   ngOnInit() {
     this.user$ = this.userService.me().pipe(map(user => cloneDeep(user)));
     this.account$ = this.accountService.getMyAccount();

@@ -37,14 +37,8 @@ import { ACondition, APageInfo, AFilter, ApiService } from '@congacommerce/core'
 })
 export class OrderDetailComponent implements OnInit, OnDestroy, AfterViewChecked {
 
-  /**
-   * String containing the lookup fields to be queried for an order record.
-   */
   private orderLookups = `PriceListId,PrimaryContact,Owner,CreatedBy,ShipToAccountId`;
 
-  /**
-   * String containing the lookup fields to be queried for a proposal record.
-   */
   private proposalLookups = `PriceListId,Primary_Contact,BillToAccountId,ShipToAccountId,AccountId,OpportunityId,Owner`;
 
   orderSubscription: Subscription;
@@ -57,9 +51,6 @@ export class OrderDetailComponent implements OnInit, OnDestroy, AfterViewChecked
 
   noteSubscription: Subscription;
 
-  /**
-   * Boolean observable to check if user is logged in.
-   */
   isLoggedIn$: Observable<boolean>;
 
   orderStatusSteps = [
@@ -195,9 +186,6 @@ export class OrderDetailComponent implements OnInit, OnDestroy, AfterViewChecked
     this.ngZone.run(() => this.order$.next(cloneDeep(order)));
   }
 
-  /**
-   * @ignore
-   */
   getNotes() {
     if (this.noteSubscription) this.noteSubscription.unsubscribe();
     this.noteSubscription = this.activatedRoute.params
@@ -210,16 +198,10 @@ export class OrderDetailComponent implements OnInit, OnDestroy, AfterViewChecked
     this.subscriptions.push(this.noteSubscription);
   }
 
-  /**
-   * @ignore
-   */
   getTotalPromotions(orderLineItems: Array<OrderLineItem> = []): number {
     return orderLineItems.length ? sum(orderLineItems.map(res => res.IncentiveAdjustmentAmount)) : 0;
   }
 
-  /**
-   * @ignore
-   */
   getChildItems(orderLineItems: Array<OrderLineItem>, lineItem: OrderLineItem): Array<OrderLineItem> {
     return orderLineItems.filter(orderItem => !orderItem.IsPrimaryLine && orderItem.PrimaryLineNumber === lineItem.PrimaryLineNumber);
   }

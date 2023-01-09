@@ -11,14 +11,11 @@ import { UserService, User, Cart, CartService, StorefrontService } from '@congac
 })
 export class MyAccountLayoutComponent implements OnInit {
 
-  /** An observable object of user type. */
   me$: Observable<User>;
-  /** @ignore */
   isAIC: boolean = false;
   cart$: Observable<Cart>;
   showFavorites$: Observable<boolean>;
 
-  /** @ignore */
   constructor(
     private userService: UserService,
     private config: ConfigurationService,
@@ -26,7 +23,6 @@ export class MyAccountLayoutComponent implements OnInit {
     private storefrontService: StorefrontService
   ) { }
 
-  /** @ignore */
   ngOnInit() {
     this.me$ = this.userService.me();
     this.isAIC = this.config.platform() === 'AIC';

@@ -22,29 +22,10 @@ export class CardFormComponent implements OnInit {
   }
 
 }
-/**
- * Special type for holding card information used for the card form component.
- * @ignore
- */
 export interface Card {
-  /**
-   * Name of card holder.
-   */
   name: string;
-  /**
-   * Number on the card.
-   */
   number: string;
-  /**
-   * Expiration year on the card.
-   */
   expirationYear: string;
-  /**
-   * Expiration month on the card.
-   */
   expirationMonth: string;
-  /**
-   * Security code on the card.
-   */
   securityCode: string;
 }

@@ -1,9 +1,3 @@
-/**
- * Apttus Digital Commerce
- *
- * Dedicated routing module for the product details module.
- */
-
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { ProductDetailComponent } from './detail/product-detail.component';
@@ -35,11 +29,8 @@ const routes: Routes = [
     }
 ];
 
-/**
- * @internal
- */
 @NgModule({
-  imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+    imports: [RouterModule.forChild(routes)],
+    exports: [RouterModule]
 })
 export class ProductsRoutingModule { }

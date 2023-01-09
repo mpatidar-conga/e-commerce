@@ -16,17 +16,14 @@ export class ManageCartComponent implements OnInit {
 
   @ViewChild('discardChangesTemplate') discardChangesTemplate: TemplateRef<any>;
 
-  /**
-   * Observable of the information for rendering this view.
-   */
   view$: Observable<ManageCartState>;
   primaryLI: Array<CartItem> = [];
 
-  constructor(private cartService: CartService, 
-              private cartItemService: CartItemService, 
-              private crService: ConstraintRuleService,
-              private router: Router, 
-              private cdr: ChangeDetectorRef) { }
+  constructor(private cartService: CartService,
+    private cartItemService: CartItemService,
+    private crService: ConstraintRuleService,
+    private router: Router,
+    private cdr: ChangeDetectorRef) { }
 
   ngOnInit() {
     this.view$ = combineLatest(
@@ -48,12 +45,12 @@ export class ManageCartComponent implements OnInit {
     return get(record, 'MainLine.Id');
   }
 
-  createQuote(){
+  createQuote() {
     this.router.navigate(['/proposals/create']);
   }
 }
 
-/** @ignore */
+
 export interface ManageCartState {
   cart: Cart;
   lineItems: Array<ItemGroup>;

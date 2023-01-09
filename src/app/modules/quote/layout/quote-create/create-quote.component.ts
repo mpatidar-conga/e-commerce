@@ -14,25 +14,10 @@ import { take } from 'rxjs/operators';
 })
 export class CreateQuoteComponent implements OnInit {
   @ViewChild('confirmationTemplate') confirmationTemplate: TemplateRef<any>;
-  /**
-   * Observable of cart
-   */
   cart$: Observable<Cart>;
-  /**
-   * Observable of storfront
-   */
   storefront$: Observable<Storefront>;
-  /**
- * Stores confirmation model
- */
   confirmationModal: BsModalRef;
-  /**
- * Quote Response Object Model
- */
   quoteConfirmation: Quote;
-  /**
- * Loading flag for spinner
- */
   loading: boolean = false;
   quoteRequestObj: Quote;
   quoteBreadCrumbObj$: Observable<Quote>;
@@ -50,12 +35,6 @@ export class CreateQuoteComponent implements OnInit {
     this.disableSubmit = !this.quoteRequestObj.Primary_Contact;
   }
 
-  /**
-   * Method converts cart to quote.
-   * @fires convertCartToQuote method.
-   * @param instance of quote
-   * @returns quote object.
-   */
   convertCartToQuote(cart: Cart) {
     if (this.quoteRequestObj.Primary_Contact) {
       this.loading = true;

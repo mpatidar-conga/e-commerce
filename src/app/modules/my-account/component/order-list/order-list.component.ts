@@ -86,14 +86,8 @@ export class OrderListComponent implements OnInit {
       Operator.IN
     ]
   };
-  /**
-   * @ignore
-   */
-  constructor(private orderService: OrderService) {}
+  constructor(private orderService: OrderService) { }
 
-  /**
-   * @ignore
-   */
   ngOnInit() {
     this.loadViewData();
   }

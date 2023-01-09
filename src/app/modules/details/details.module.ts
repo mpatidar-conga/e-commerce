@@ -21,9 +21,6 @@ import {
 import { DetailsLayoutComponent } from './layout/details-layout.component';
 import { DetailSectionComponent } from './component/detail-section/detail-section.component';
 
-/**
- * @ignore
- */
 @NgModule({
   imports: [
     CommonModule,

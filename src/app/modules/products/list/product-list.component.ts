@@ -14,38 +14,14 @@ import { map as rmap, mergeMap, take } from 'rxjs/operators';
 })
 export class ProductListComponent implements OnInit, OnDestroy {
 
-  /**
-   * Current page used by the pagination component. Default is 1.
-   */
   page = 1;
-  /**
-   * Number of records per page used by the pagination component. Default is 12.
-   */
   pageSize = 12;
-  /**
-   * Layout in which one wants to see products. Grid/list. Default is Grid.
-   */
   view = 'grid';
-  /**
-   * A field name on which one wants to apply sorting.
-   */
   sortField: string = 'Relevance';
-  /**
-   * Value of the product family field filter.
-   */
   productFamilyFilter: ACondition;
-  /**
-   * Condition to filter products from all products.
-   */
   conditions: Array<ACondition> = new Array<ACondition>();
-  /**
-   * Used to hold the current array of subcategories that are selected.
-   */
   subCategories: Array<Category> = [];
   joins: Array<AJoin> = new Array<AJoin>();
-  /**
-   * Search query to filter products list from grid.
-   */
   searchString: string = null;
   data$: BehaviorSubject<ProductResult> = new BehaviorSubject<ProductResult>(null);
   productFamilies$: Observable<Array<string>> = new Observable<Array<string>>();
@@ -54,43 +30,28 @@ export class ProductListComponent implements OnInit, OnDestroy {
   subscription: Subscription;
   hasSearchError: boolean;
 
-  /**
-   * Control over button's text/label of pagination component for Multi-Language Support
-   */
   paginationButtonLabels: any = {
     first: '',
     previous: '',
     next: '',
     last: ''
   };
-  /**
-   * Array of product families associated with the list of assets.
-   */
 
-  /**
-   * @ignore
-   */
   constructor(
-    private activatedRoute: ActivatedRoute, 
-    private searchService: SearchService, 
-    private categoryService: CategoryService, 
-    private router: Router, 
-    public productService: ProductService, 
+    private activatedRoute: ActivatedRoute,
+    private searchService: SearchService,
+    private categoryService: CategoryService,
+    private router: Router,
+    public productService: ProductService,
     private translateService: TranslateService,
-    private cartService:CartService
+    private cartService: CartService
   ) { }
 
-  /**
-   * @ignore
-   */
   ngOnDestroy() {
     if (!isNil(this.subscription))
       this.subscription.unsubscribe();
   }
 
-  /**
-   * @ignore
-   */
   ngOnInit() {
     this.getResults();
     this.cart$ = this.cartService.getMyCart();
@@ -107,9 +68,6 @@ export class ProductListComponent implements OnInit, OnDestroy {
     });
   }
 
-  /**
-   * @ignore
-   */
   getResults() {
     this.ngOnDestroy();
     this.subscription = this.activatedRoute.params.pipe(
@@ -140,9 +98,6 @@ export class ProductListComponent implements OnInit, OnDestroy {
 
   }
 
-  /**
-   * This function helps at UI to scroll at the top of the product list.
-   */
   scrollTop() {
     const c = document.documentElement.scrollTop || document.body.scrollTop;
     if (c > 0) {
@@ -151,10 +106,6 @@ export class ProductListComponent implements OnInit, OnDestroy {
     }
   }
 
-  /**
-   * Filters peers Category from the categorylist.
-   * @param categoryList Array of Category.
-   */
   onCategory(categoryList: Array<Category>) {
     const category = get(categoryList, '[0]');
     if (category) {
@@ -164,10 +115,6 @@ export class ProductListComponent implements OnInit, OnDestroy {
     }
   }
 
-  /**
-   * Event handler for the pagination component when the page is changed.
-   * @param evt Event object that was fired.
-   */
   onPage(evt) {
     if (get(evt, 'page') !== this.page) {
       this.page = evt.page;
@@ -175,28 +122,17 @@ export class ProductListComponent implements OnInit, OnDestroy {
     }
   }
 
-  /**
-   * @ignore
-   */
   onPriceTierChange(evt) {
     this.page = 1;
     this.getResults();
   }
 
-  /**
-   * Filters child category from the categorylist.
-   * @param categoryList Array of Category.
-   */
   onSubcategoryFilter(categoryList: Array<Category>) {
     this.subCategories = categoryList;
     this.page = 1;
     this.getResults();
   }
 
-  /**
-   * This function is called when adding saerch filter criteria to product grid.
-   * @param condition Search filter query to filter products.
-   */
   onFilterAdd(condition: ACondition) {
     remove(this.conditions, (c) => isEqual(c, condition));
     this.page = 1;
@@ -205,47 +141,28 @@ export class ProductListComponent implements OnInit, OnDestroy {
     this.getResults();
   }
 
-  /**
-   * This function is called when removing saerch filter criteria to product grid.
-   * @param condition Search filter query to remove from products grid.
-   */
   onFilterRemove(condition: ACondition) {
     remove(this.conditions, (c) => isEqual(c, condition));
     this.page = 1;
     this.getResults();
   }
 
-  /**
-   * @ignore
-   */
   onFieldFilter(evt: ACondition) {
     this.page = 1;
     this.getResults();
   }
 
-  /**
-   * Fired when sorting is changed on products grid.
-   * @param evt Event object that was fired.
-   */
   onSortChange(evt) {
     this.page = 1;
     this.sortField = evt;
     this.getResults();
   }
 
-  /**
-   * Fired when page size is changed for products grid.
-   * @param event Event object that was fired.
-   */
   onPageSizeChange(event) {
     this.pageSize = event;
     this.getResults();
   }
 
-  /**
-   * Filter on products grid forby product family.
-   * @param event Event Object that was fired.
-   */
   handlePicklistChange(event: any) {
     if (this.productFamilyFilter) remove(this.conditions, this.productFamilyFilter);
     if (event.length > 0) {

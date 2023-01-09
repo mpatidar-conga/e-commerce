@@ -38,14 +38,8 @@ export class DashboardComponent implements OnInit {
     filters: [new AFilter(Order, [new ACondition(Order, 'CreatedDate', 'LastXDays', 7)])]
   };
 
-  /**
-  * @ignore
-  */
   constructor(private orderService: OrderService, private userService: UserService) { }
 
-  /**
-  * @ignore
-  */
   ngOnInit() {
 
     this.user$ = this.userService.getCurrentUser();

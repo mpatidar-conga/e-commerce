@@ -33,9 +33,9 @@ export class ReorderComponent implements OnInit {
       }));
   }
 
-  onOrder(){
-      combineLatest(this.productService.where([new ACondition(Product, 'Id', 'NotNull', null)]), this.cartService.createNewCart(new Cart(), false))
-      .subscribe(([productList, cart]) =>{
+  onOrder() {
+    combineLatest(this.productService.where([new ACondition(Product, 'Id', 'NotNull', null)]), this.cartService.createNewCart(new Cart(), false))
+      .subscribe(([productList, cart]) => {
         this.cart = cart;
         cart.LineItems = new Array<CartItem>();
         productList.forEach(product => {
@@ -45,16 +45,15 @@ export class ReorderComponent implements OnInit {
           // cart.LineItems.push(cartItem);
         });
       });
-    }
+  }
 
-  onQuantityChange(evt){
+  onQuantityChange(evt) {
     console.log(evt);
   }
 
 }
 
-/** @ignore */
-export interface ProductQuantityMap{
+export interface ProductQuantityMap {
   quantity: number;
   product: Product;
 }

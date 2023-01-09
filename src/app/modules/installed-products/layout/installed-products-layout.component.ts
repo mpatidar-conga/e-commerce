@@ -17,37 +17,21 @@ import { ClassType } from 'class-transformer/ClassTransformer';
   providers: [DatePipe]
 })
 export class InstalledProductsLayoutComponent implements OnInit, OnDestroy {
-  /**
-   * The view object used for rendering information in the template.
-   */
+
   view$: BehaviorSubject<AssetListView> = new BehaviorSubject<AssetListView>(null);
-  /**
-   * cart record
-   */
+
   cart: Cart;
-  /**
-   * Value of the days to renew filter.
-   */
+
   renewFilter: AFilter;
-  /**
-   * Value of the price type filter.
-   */
+
   priceTypeFilter: AFilter;
-  /**
-   * Value of the asset action filter.
-   */
+
   assetActionFilter: AFilter;
-  /**
-   * Value of the product family field filter.
-   */
+
   productFamilyFilter: AFilter;
-  /**
-   * Value of the advanced filter component.
-   */
+
   advancedFilters: Array<AFilter> = [];
-  /**
-   * Configuration object used to configure the data filter.
-   */
+
   advancedFilterOptions: FilterOptions = {
     visibleFieldsWithOperators: [
       {
@@ -88,9 +72,7 @@ export class InstalledProductsLayoutComponent implements OnInit, OnDestroy {
       }
     ]
   };
-  /**
-   * Default filters that will be applied to the table and chart components.
-   */
+
   defaultFilters: Array<AFilter> = [
     new AFilter(this.assetService.type, [
       new ACondition(this.assetService.type, 'LineType', 'NotEqual', 'Option'),
@@ -98,17 +80,11 @@ export class InstalledProductsLayoutComponent implements OnInit, OnDestroy {
       new ACondition(this.assetService.type, 'IsPrimaryLine', 'Equal', true)
     ])
   ];
-  /**
-   * Flag to pre-select items in the table component.
-   */
+
   preselectItemsInGroups: boolean = false;
-  /**
-   * Color palette used for the chart component styling.
-   */
+
   colorPalette = ['#D22233', '#F2A515', '#6610f2', '#008000', '#17a2b8', '#0079CC', '#CD853F', '#6f42c1', '#20c997', '#fd7e14'];
-  /**
-   * Map of asset actions to their appropriate filter.
-   */
+
   private assetActionMap = {
     All: null,
     Renew: new AFilter(AssetLineItem, [new ACondition(AssetLineItem, 'PriceType', 'NotEqual', 'One Time')]),
@@ -143,9 +119,7 @@ export class InstalledProductsLayoutComponent implements OnInit, OnDestroy {
     private storefrontService: StorefrontService
   ) { }
 
-  /**
-   * @ignore
-   */
+
   ngOnInit() {
     if (!isEmpty(get(this.route, 'snapshot.queryParams'))) {
       this.preselectItemsInGroups = true;
@@ -154,9 +128,7 @@ export class InstalledProductsLayoutComponent implements OnInit, OnDestroy {
     }
     this.loadView();
   }
-  /**
-   * Loads the view data.
-   */
+
   loadView() {
     this.ngOnDestroy();
     this.subscription = combineLatest(
@@ -190,7 +162,7 @@ export class InstalledProductsLayoutComponent implements OnInit, OnDestroy {
           lookups: [
             {
               field: 'AttributeValueId'
-            }, 
+            },
             {
               field: 'ProductId'
             }
@@ -228,49 +200,32 @@ export class InstalledProductsLayoutComponent implements OnInit, OnDestroy {
     if (this.subscription)
       this.subscription.unsubscribe();
   }
-  /**
-   * Event handler for when the advanced filter changes.
-   * @param event The event that was fired.
-   */
+
   handleAdvancedFilterChange(event: any) {
     this.advancedFilters = event;
     this.loadView();
   }
-  /**
-   * Event handler for when the days to renew filter is changed.
-   * @param event The Event that was fired.
-   */
+
   onRenewalChange(event: AFilter) {
     this.renewFilter = event;
     this.loadView();
   }
-  /**
-   * Event handler for when price type filter is changed.
-   * @param event Event object that was fired.
-   */
+
   onPriceTypeChange(event: AFilter) {
     this.priceTypeFilter = event;
     this.loadView();
   }
-  /**
-   * Event handler for when the asset action filter changes.
-   * @param event The event that was fired.
-   */
+
   onAssetActionChange(event: string) {
     this.assetActionFilter = this.assetActionMap[event];
     this.loadView();
   }
-  /**
-   * Event handler for when the product family filter changes.
-   * @param event The event that was fired.
-   */
+
   onProductFamilyChange(event: AFilter) {
     this.productFamilyFilter = event;
     this.loadView();
   }
-  /**
-   * Get all the currently applied filters.
-   */
+
   private getFilters() {
     return concat(this.defaultFilters, this.advancedFilters, this.renewFilter, this.priceTypeFilter, this.assetActionFilter, this.productFamilyFilter);
   }
@@ -283,7 +238,7 @@ export class InstalledProductsLayoutComponent implements OnInit, OnDestroy {
         label: 'Renew',
         theme: 'primary',
         validate(record: AssetLineItemExtended, childRecords: Array<AssetLineItemExtended>): boolean {
-          return record.canRenew(childRecords) && !(filter(get(cart, 'LineItems'), (item) => get(item, 'AssetLineItemId') ===  record.Id).length > 0);
+          return record.canRenew(childRecords) && !(filter(get(cart, 'LineItems'), (item) => get(item, 'AssetLineItemId') === record.Id).length > 0);
         },
         action: (recordList: Array<AObject>): Observable<void> => {
           this.assetModalService.openRenewModal(
@@ -299,7 +254,7 @@ export class InstalledProductsLayoutComponent implements OnInit, OnDestroy {
         label: 'Terminate',
         theme: 'danger',
         validate(record: AssetLineItemExtended, childRecords: Array<AssetLineItemExtended>): boolean {
-          return record.canTerminate(childRecords) && !(filter(get(cart, 'LineItems'), (item) => get(item, 'AssetLineItemId') ===  record.Id).length > 0);
+          return record.canTerminate(childRecords) && !(filter(get(cart, 'LineItems'), (item) => get(item, 'AssetLineItemId') === record.Id).length > 0);
         },
         action: (recordList: Array<AObject>): Observable<void> => {
           this.assetModalService.openTerminateModal(
@@ -315,7 +270,7 @@ export class InstalledProductsLayoutComponent implements OnInit, OnDestroy {
         label: 'Buy More',
         theme: 'primary',
         validate(record: AssetLineItemExtended, childRecords: Array<AssetLineItemExtended>): boolean {
-          return record.canBuyMore() && !(filter(get(cart, 'LineItems'), (item) => get(item, 'AssetLineItemId') ===  record.Id).length > 0);
+          return record.canBuyMore() && !(filter(get(cart, 'LineItems'), (item) => get(item, 'AssetLineItemId') === record.Id).length > 0);
         },
         action: (recordList: Array<AObject>): Observable<void> => {
           this.assetModalService.openBuyMoreModal(
@@ -330,7 +285,7 @@ export class InstalledProductsLayoutComponent implements OnInit, OnDestroy {
         label: 'Change Configuration',
         theme: 'primary',
         validate(record: AssetLineItemExtended, childRecords: Array<AssetLineItemExtended>): boolean {
-          return record.canChangeConfiguration() && !(filter(get(cart, 'LineItems'), (item) => get(item, 'AssetLineItemId') ===  record.Id).length > 0);
+          return record.canChangeConfiguration() && !(filter(get(cart, 'LineItems'), (item) => get(item, 'AssetLineItemId') === record.Id).length > 0);
         },
         action: (recordList: Array<AObject>): Observable<void> => {
           this.assetModalService.openChangeConfigurationModal(
@@ -343,7 +298,7 @@ export class InstalledProductsLayoutComponent implements OnInit, OnDestroy {
     ];
   }
 }
-/** @ignore */
+
 interface AssetListView {
   tableOptions: TableOptions;
   assetType: ClassType<AObject>;

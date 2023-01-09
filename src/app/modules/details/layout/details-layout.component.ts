@@ -2,10 +2,7 @@ import { Component, ContentChildren, AfterContentInit, QueryList, ElementRef, Ho
 import { get, set, findIndex } from 'lodash';
 import { AObject } from '@congacommerce/core';
 import { DetailSectionComponent } from '../component/detail-section/detail-section.component';
-/**
- * Details Layout Component shows the details of the placed order or the requested quote.
- * @ignore
- */
+
 @Component({
   selector: 'app-detail',
   templateUrl: './details-layout.component.html',
@@ -34,12 +31,6 @@ export class DetailsLayoutComponent implements AfterContentInit {
     set(this, 'sections.first.active', true);
   }
 
-  /**
-   * HostListener Decorator a DOM event to listen for, and provides a handler method to run when that 
-   * event occurs. Here attaches listener to window on scroll event.
-   * In onScroll method assigns headerClass property with the class "'fixed-top' | 'fixed-top expand'" based on window 
-   * pageYOffset and set the tab active.
-   */
   @HostListener('window:scroll', ['$event'])
   onScroll(event) {
     if (this.headerClass != null && window.pageYOffset < 35) {
@@ -55,9 +46,6 @@ export class DetailsLayoutComponent implements AfterContentInit {
   }
   headerClass: 'fixed-top' | 'fixed-top expand' = null;
 
-  /**
-   * scrollTo method scrolls the page to the specified tab content.
-   */
   scrollTo(tab: DetailSectionComponent) {
     const index = findIndex(this.sections.toArray(), t => t.title === tab.title);
     if (index === 0)

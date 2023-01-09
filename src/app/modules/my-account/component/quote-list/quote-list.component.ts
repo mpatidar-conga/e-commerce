@@ -39,7 +39,7 @@ export class QuoteListComponent implements OnInit {
         prop: 'Grand_Total',
         label: 'Total Amount',
         value: (record) => {
-          return this.currencyPipe.transform(get(find(get(record, 'ProposalSummaryGroups'), { LineType : 'Grand Total'}), 'NetPrice'));
+          return this.currencyPipe.transform(get(find(get(record, 'ProposalSummaryGroups'), { LineType: 'Grand Total' }), 'NetPrice'));
         }
       },
       {
@@ -74,9 +74,6 @@ export class QuoteListComponent implements OnInit {
     ],
     children: ['ProposalSummaryGroups']
   };
-  /**
-   * Array of quotes for current page number.
-   */
   quote: Quote = new Quote();
   minDaysFromDueDate: number = 7;
   maxDaysFromDueDate: number = 14;
@@ -88,10 +85,8 @@ export class QuoteListComponent implements OnInit {
   quotesByStatus$: Observable<number>;
   quotesByDueDate$: Observable<number>;
 
-  /** @ignore */
   constructor(private quoteService: QuoteService, private currencyPipe: LocalCurrencyPipe) { }
 
-  /** @ignore */
   ngOnInit() {
     this.loadViewData();
   }
@@ -113,13 +108,13 @@ export class QuoteListComponent implements OnInit {
             : zipObject([get(data, 'Apttus_Proposal__Approval_Stage__c')], map([get(data, 'Apttus_Proposal__Approval_Stage__c')], key => get(data, 'total_records')))
         );
 
-        const quotesDuedate ={};
-        if(isArray(data)) {
-          forOwn(omit(mapValues(groupBy(data, 'Apttus_Proposal__RFP_Response_Due_Date__c'), s => sumBy(s, 'total_records')), 'null'), (value,key) => {
-              const label = this.generateLabels(key);
-              if(has(quotesDuedate,label)) 
-                value = quotesDuedate[label]+ value;
-              quotesDuedate[label] = value;
+        const quotesDuedate = {};
+        if (isArray(data)) {
+          forOwn(omit(mapValues(groupBy(data, 'Apttus_Proposal__RFP_Response_Due_Date__c'), s => sumBy(s, 'total_records')), 'null'), (value, key) => {
+            const label = this.generateLabels(key);
+            if (has(quotesDuedate, label))
+              value = quotesDuedate[label] + value;
+            quotesDuedate[label] = value;
           });
         }
 
@@ -139,15 +134,12 @@ export class QuoteListComponent implements OnInit {
         );
       });
   }
-  /** @ignore */
+
   handleFilterListChange(event: any) {
     this.filterList = event;
     this.loadViewData();
   }
 
-/**
-  *  @ignore
-  */
   private generateLabels(date): string {
     const today = moment(new Date());
     const dueDate = (date) ? moment(date) : null;

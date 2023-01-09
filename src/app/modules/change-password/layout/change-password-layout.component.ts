@@ -4,9 +4,6 @@ import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 
 
- /**
-  * Prevents compile time type error checking from flagging the call as invalid.
-  */
 const sv = (<any>window).sv;
 
 @Component({
@@ -16,28 +13,12 @@ const sv = (<any>window).sv;
 })
 export class ChangePasswordLayoutComponent {
 
-  /**
-   * Different messages depending on the state of component
-   * e.g. PasswordA and PasswordB doesn't match, Reusing old password, some errors/exceptions
-   */
   message: string;
-  /**
-   * Change Password form model consisting PasswordA and PasswordB fields
-   */
   passwordForm: PasswordForm = {} as PasswordForm;
-  /**
-   * Shows/Hides Spinner when LoadingStarts/LoadingEnds
-   */
   loading: boolean = false;
 
   constructor(private userService: UserService, private router: Router, private ngZone: NgZone, private translateService: TranslateService) { }
 
-
-  /**
-   * Takes two password from form inputs, compares them if match is found
-   * calls user service's setPassword(newPassword) and changes password for user.
-   * Shows error if there are any
-   */
   setPassword(){
     if(this.passwordForm.passwordA !== this.passwordForm.passwordB) {
       this.translateService.stream('CHANGE_PASSWORD.PASSWORD_DO_NOT_MATCH_ERROR').subscribe((val: string) => {
@@ -71,7 +52,6 @@ export class ChangePasswordLayoutComponent {
   }
 }
 
-/** @ignore */
 interface PasswordForm{
   passwordA: string;
   passwordB: string;

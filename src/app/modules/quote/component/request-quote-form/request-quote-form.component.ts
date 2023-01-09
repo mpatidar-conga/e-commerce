@@ -43,24 +43,21 @@ export class RequestQuoteFormComponent implements OnInit {
 
   ngOnInit() {
     this.quote.Name = 'Test';
-    zip(this.accountService.getCurrentAccount(), this.userService.me(),(this.cart.Proposald? this.quoteService.get([get(this.cart, 'Proposald.Id')]) : of(null))).pipe(take(1)).subscribe(([account, user, quote]) => {
-        this.quote.ShipToAccount = account;
-        this.quote.ShipToAccountId = account.Id;
-        this.quote.BillToAccount = account;
-        this.quote.BillToAccountId =  account.Id;
-        this.quote.Primary_Contact = get(user, 'Contact');
-        this.contactId = this.cart.Proposald?  get(quote[0],'Primary_ContactId') : get(user, 'ContactId');
-        if(get(this.cart, 'Proposald.Id')) {
-          this.quote = get(this.cart, 'Proposald');
-          this.comments = get(quote, '[0].Notes', []);
-        }
-        this.quoteChange();
-      });
+    zip(this.accountService.getCurrentAccount(), this.userService.me(), (this.cart.Proposald ? this.quoteService.get([get(this.cart, 'Proposald.Id')]) : of(null))).pipe(take(1)).subscribe(([account, user, quote]) => {
+      this.quote.ShipToAccount = account;
+      this.quote.ShipToAccountId = account.Id;
+      this.quote.BillToAccount = account;
+      this.quote.BillToAccountId = account.Id;
+      this.quote.Primary_Contact = get(user, 'Contact');
+      this.contactId = this.cart.Proposald ? get(quote[0], 'Primary_ContactId') : get(user, 'ContactId');
+      if (get(this.cart, 'Proposald.Id')) {
+        this.quote = get(this.cart, 'Proposald');
+        this.comments = get(quote, '[0].Notes', []);
+      }
+      this.quoteChange();
+    });
   }
 
-  /**
-   * This method adds comments to requesting quote.
-   */
   addComment() {
     if (this.quote) {
       this.quote.Description = this.note.Body;
@@ -68,9 +65,6 @@ export class RequestQuoteFormComponent implements OnInit {
     }
   }
 
-  /**
-   * @ignore
-   */
   quoteChange() {
     this.onQuoteUpdate.emit(this.quote);
   }
@@ -84,7 +78,7 @@ export class RequestQuoteFormComponent implements OnInit {
       });
     } else {
       this.quote.ShipToAccount = null;
-      this.shipToAccount$= null;
+      this.shipToAccount$ = null;
       this.onQuoteUpdate.emit(this.quote);
     }
   }
@@ -98,30 +92,26 @@ export class RequestQuoteFormComponent implements OnInit {
       });
     } else {
       this.quote.BillToAccount = null;
-      this.billToAccount$= null;
+      this.billToAccount$ = null;
       this.onQuoteUpdate.emit(this.quote);
     }
   }
 
-primaryContactChange() {
-  if (this.contactId) {
-    this.contactService.fetch(this.contactId)
-      .pipe(take(1))
-      .subscribe((newPrimaryContact: Contact) => {
-        this.quote.Primary_Contact = newPrimaryContact;
-        this.quote.Primary_ContactId = newPrimaryContact.Id;
-        this.onQuoteUpdate.emit(this.quote);
-      });
-  } else {
-    this.quote.Primary_Contact = null;
-    this.onQuoteUpdate.emit(this.quote);
+  primaryContactChange() {
+    if (this.contactId) {
+      this.contactService.fetch(this.contactId)
+        .pipe(take(1))
+        .subscribe((newPrimaryContact: Contact) => {
+          this.quote.Primary_Contact = newPrimaryContact;
+          this.quote.Primary_ContactId = newPrimaryContact.Id;
+          this.onQuoteUpdate.emit(this.quote);
+        });
+    } else {
+      this.quote.Primary_Contact = null;
+      this.onQuoteUpdate.emit(this.quote);
+    }
   }
-}
 
-  /**
-   * Event handler for when the primary contact input changes.
-   * @param event The event that was fired.
-   */
   handlePrimaryContactChange(event: any) { }
 
 }

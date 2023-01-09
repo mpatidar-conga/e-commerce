@@ -30,14 +30,11 @@ import { ConfigurationService } from '@congacommerce/core';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 
-/**
- * @ignore
- */
 export class ProductReplacementsComponent implements OnInit {
   @Input() productList: Array<Product>;
   identifier: string = 'Id';
 
-  constructor(private config: ConfigurationService) { 
+  constructor(private config: ConfigurationService) {
     this.identifier = this.config.get('productIdentifier');
   }
 

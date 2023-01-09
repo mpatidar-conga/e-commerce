@@ -1,8 +1,3 @@
-/**
- * Apttus Digital Commerce
- *
- * Dedicated routing module for the my account module
- */
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { MyAccountLayoutComponent } from './layout/my-account-layout.component';
@@ -16,56 +11,52 @@ import { CartListComponent } from './component/cart-list/cart-list.component';
 import { FavoriteListComponent } from './component/favorite-list/favorite-list.component';
 
 
-
 const routes: Routes = [
   {
-    path : '',
+    path: '',
     component: MyAccountLayoutComponent,
-    children : [
+    children: [
       {
-        path : 'dashboard',
-        component : DashboardComponent
+        path: 'dashboard',
+        component: DashboardComponent
       },
       {
-        path : 'orders',
-        component : OrderListComponent
+        path: 'orders',
+        component: OrderListComponent
       },
       {
-        path : 'quotes',
-        component : QuoteListComponent
+        path: 'quotes',
+        component: QuoteListComponent
       },
       {
-        path : 'wishlists',
-        component : WishlistsComponent
+        path: 'wishlists',
+        component: WishlistsComponent
       },
       {
-        path : 'addresses',
-        component : AddressBookComponent
+        path: 'addresses',
+        component: AddressBookComponent
       },
       {
-        path : 'settings',
-        component : SettingsComponent
+        path: 'settings',
+        component: SettingsComponent
       },
       {
-        path : 'carts',
-        component : CartListComponent
+        path: 'carts',
+        component: CartListComponent
       },
       {
-        path : 'favorites',
-        component : FavoriteListComponent
+        path: 'favorites',
+        component: FavoriteListComponent
       },
       {
-        path : '',
-        redirectTo : 'dashboard',
-        pathMatch : 'full'
+        path: '',
+        redirectTo: 'dashboard',
+        pathMatch: 'full'
       }
     ]
   }
 ];
 
-/**
- * @internal
- */
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]

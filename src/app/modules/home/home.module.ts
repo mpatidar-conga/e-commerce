@@ -1,9 +1,3 @@
-/**
-* Apttus Digital Commerce
-*
-* The home module is the landing page for the ecommerce application. It utilizes the
-* product carousel and jumbotron component from the apttus elements library test
-*/
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 

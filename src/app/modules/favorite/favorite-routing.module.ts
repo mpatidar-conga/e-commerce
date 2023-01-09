@@ -1,6 +1,3 @@
-/**
- * Dedicated routing module for the favorite module.
- */
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
@@ -18,9 +15,6 @@ const routes: Routes = [
   }
 ];
 
-/**
- * @internal
- */
 @NgModule({
   imports: [
     CommonModule,

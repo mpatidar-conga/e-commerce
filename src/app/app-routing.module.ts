@@ -1,8 +1,3 @@
-/**
- * Apttus Digital Commmerce
- *
- * Primary routing module for the application. Provides all the root level routing paths for the application
- */
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { environment } from '../environments/environment';
@@ -95,9 +90,6 @@ const routes: Routes = [
   }
 ];
 
-/**
- * @internal
- */
 @NgModule({
   imports: [RouterModule.forRoot(routes, { useHash: environment.hashRouting, scrollPositionRestoration: 'enabled' })],
   exports: [RouterModule]

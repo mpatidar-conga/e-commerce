@@ -4,7 +4,7 @@ import { CacheService } from '@congacommerce/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { TranslateService } from '@ngx-translate/core';
-import {get, last} from 'lodash';
+import { get, last } from 'lodash';
 import { combineLatest } from 'rxjs';
 import { take } from 'rxjs/operators';
 
@@ -15,19 +15,9 @@ import { take } from 'rxjs/operators';
 })
 
 export class LoginLayoutComponent {
-  /**
-   * Username required for login
-   */
   username: string;
-  /**
-   * Password is case sensitive and non-readable format for login
-   */
   password: string;
-  /**
-   * Flag used to show/hide loader
-   */
   loading: boolean = false;
-  /** @ignore */
   loginMessage: string;
 
   constructor(
@@ -38,21 +28,17 @@ export class LoginLayoutComponent {
     private activatedRoute: ActivatedRoute,
     private cacheService: CacheService,
     private ngZone: NgZone
-    ) { }
+  ) { }
 
-  /**
-   * This method will check user authenthicity based on given details
-   */
   login() {
     this.loading = true;
-    /**UserService is used to verify the user and update user details for further use. */
     combineLatest([this.userService.login(this.username, this.password), this.activatedRoute.queryParams])
-    .pipe(take(1))  
-    .subscribe(
-        res =>{
-          if(get(last(res), 'redirectUrl')) {
+      .pipe(take(1))
+      .subscribe(
+        res => {
+          if (get(last(res), 'redirectUrl')) {
             window.location.href = get(last(res), 'redirectUrl');
-            if((!!window.location.hash)) window.location.reload(true);
+            if ((!!window.location.hash)) window.location.reload(true);
           } else
             window.location.reload(true)
         },

@@ -15,15 +15,7 @@ import { TableOptions, TableAction, ExceptionService } from '@congacommerce/elem
 export class FavoriteListComponent implements OnInit {
 
   type = Favorite;
-
-  /**
-   * An observable with the aggregate count of favorites.
-   */
   favoritesAggregate$: Observable<any>;
-
-  /**
-   * Options passed to table component to render the favorites in a grid view.
-   */
   tableOptions$: Observable<TableOptions>;
 
   user: User;
@@ -110,56 +102,34 @@ export class FavoriteListComponent implements OnInit {
       }));
   }
 
-  /**
-   * @ignore
-   */
   private isActiveFavorite(favorite: Favorite) {
     return favorite.Active;
   }
 
-  /**
-   * @param favorite record to add saved configurations from.
-   * @returns list of line items from favorite configuration added to active cart.
-   */
   private addFavoriteToCart(favorite: Favorite): Observable<Array<CartItem>> {
     return this.favoriteService.addFavoriteToCart(favorite.Id).pipe(
       tap(() => this.exceptionService.showSuccess('SUCCESS.FAVORITE.ADD_FAVORITE_TO_CART', 'SUCCESS.FAVORITE.TITLE', { name: favorite.Name }))
     )
   }
 
-  /**
-   * @ignore
-   */
   private editFavorite(favorite: Favorite) {
     this.router.navigate(['/favorites', favorite.Id]);
   }
 
-  /**
-   * @ignore
-   */
   private removeFavorites(favoriteList: Array<Favorite>): Observable<Array<Favorite>> {
     return this.favoriteService.removeFavorites(favoriteList).pipe(
       tap(() => this.loadData())
     );
   }
 
-  /**
-   * @ignore
-   */
   private canDelete(favorite: Favorite) {
     return get(favorite, 'OwnerId') === get(this.user, 'Id');
   }
 
-  /**
-   * @ignore
-   */
   private canEdit(favorite: Favorite) {
     return this.isActiveFavorite(favorite) && (get(favorite, 'OwnerId') === get(this.user, 'Id'));
   }
 
-  /**
-   * @ignore
-   */
   private getFavoritesAggregate(): Observable<any> {
     return this.favoritesAggregate$ = this.favoriteService.query({
       aggregate: true,
@@ -168,9 +138,6 @@ export class FavoriteListComponent implements OnInit {
     }).pipe(map(first));
   }
 
-  /**
-   * @ignore
-   */
   private getFilters(): Array<AFilter> {
     const filters = [];
     filters.push(new AFilter(this.type, null, [

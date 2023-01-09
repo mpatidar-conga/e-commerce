@@ -5,7 +5,7 @@ import {
 } from '@congacommerce/ecommerce';
 import { ActivatedRoute, Router } from '@angular/router';
 import { filter, map, take, mergeMap, switchMap, startWith, tap } from 'rxjs/operators';
-import { get, set, compact, uniq, find, cloneDeep, sum, defaultTo} from 'lodash';
+import { get, set, compact, uniq, find, cloneDeep, sum, defaultTo } from 'lodash';
 import { Observable, of, BehaviorSubject, Subscription, combineLatest } from 'rxjs';
 import { ExceptionService, LookupOptions, RevalidateCartService } from '@congacommerce/elements';
 import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
@@ -97,11 +97,11 @@ export class QuoteDetailsComponent implements OnInit, OnDestroy {
         map(params => get(params, 'id')),
         mergeMap(quoteId => this.apiService.get(`/quotes/${quoteId}?lookups=PriceListId,Primary_Contact,Account,CreatedBy`, Quote)),
         switchMap((quote: Quote) => combineLatest([of(quote),
-          // Using query instead of get(), as get is not returning list of accounts as expected.
-          this.accountService.query({
-            conditions: [
-              new ACondition(Account, 'Id', 'In', compact(uniq([quote.BillToAccountId, quote.ShipToAccountId, quote.AccountId, get(quote, 'PrimaryContact.AccountId')])))]
-          })
+        // Using query instead of get(), as get is not returning list of accounts as expected.
+        this.accountService.query({
+          conditions: [
+            new ACondition(Account, 'Id', 'In', compact(uniq([quote.BillToAccountId, quote.ShipToAccountId, quote.AccountId, get(quote, 'PrimaryContact.AccountId')])))]
+        })
         ])),
         map(([quote, accounts]) => {
           quote.Account = defaultTo(find(accounts, acc => acc.Id === quote.AccountId), quote.Account);
@@ -208,9 +208,6 @@ export class QuoteDetailsComponent implements OnInit, OnDestroy {
       });
   }
 
-  /**
-   * @ignore
-   */
   fileChange(event) {
     const fileList: FileList = event.target.files;
     if (fileList.length > 0) {
@@ -220,9 +217,6 @@ export class QuoteDetailsComponent implements OnInit, OnDestroy {
     }
   }
 
-  /**
-   * @ignore
-   */
   hasFileSizeExceeded(fileList, maxSize) {
     let totalFileSize = 0;
     for (let i = 0; i < fileList.length; i++) {
@@ -231,16 +225,10 @@ export class QuoteDetailsComponent implements OnInit, OnDestroy {
     this.hasSizeError = totalFileSize > maxSize;
   }
 
-  /**
-   * @ignore
-   */
   onDragFile(event) {
     event.preventDefault();
   }
 
-  /**
-   * @ignore
-   */
   onDropFile(event) {
     event.preventDefault();
     const itemList: DataTransferItemList = event.dataTransfer.items;
@@ -262,9 +250,6 @@ export class QuoteDetailsComponent implements OnInit, OnDestroy {
     this.file = this.uploadFileList[0];
   }
 
-  /**
-   * @ignore
-   */
   clearFiles() {
     this.file = null;
     this.uploadFileList = null;
@@ -279,9 +264,6 @@ export class QuoteDetailsComponent implements OnInit, OnDestroy {
       );
   }
 
-  /**
-   * @ignore
-   */
   uploadAttachment(parentId: string) {
     this.attachments_loader = true;
     this.attachmentService.uploadAttachment(this.file, parentId).pipe(take(1)).subscribe(res => {
@@ -295,16 +277,10 @@ export class QuoteDetailsComponent implements OnInit, OnDestroy {
     });
   }
 
-  /**
-   * @ignore
-   */
   downloadAttachment(attachmentId: string, parentId: string) {
     return this.productInformationService.getAttachmentUrl(attachmentId, parentId);
   }
 
-  /**
-   * @ignore
-   */
   getTotalPromotions(quote: Quote): number {
     return ((get(quote, 'QuoteLineItems.length') > 0)) ? sum(get(quote, 'QuoteLineItems').map(res => res.IncentiveAdjustmentAmount)) : 0;
   }
@@ -316,9 +292,6 @@ export class QuoteDetailsComponent implements OnInit, OnDestroy {
     });
   }
 
-  /**
-   * @ignore
-   */
   ngOnDestroy() {
     if (this.notesSubscription)
       this.notesSubscription.unsubscribe();

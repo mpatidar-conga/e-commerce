@@ -10,18 +10,18 @@ export class RouteGuard implements CanActivate {
     constructor(private router: Router) { }
 
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
-        if (sv && sv.params){
-            const params: Params = <Params> this.parseQuery(sv.params);
-            if(params.setupid){
+        if (sv && sv.params) {
+            const params: Params = <Params>this.parseQuery(sv.params);
+            if (params.setupid) {
                 this.router.navigate([params.setupid]);
                 return false;
-            }else
+            } else
                 return true;
-        }else
+        } else
             return true;
     }
 
-    private parseQuery(queryString: string): Object{
+    private parseQuery(queryString: string): Object {
         const query = {};
         const pairs = (queryString[0] === '?' ? queryString.substr(1) : queryString).split('&');
         for (let i = 0; i < pairs.length; i++) {
@@ -32,8 +32,7 @@ export class RouteGuard implements CanActivate {
     }
 }
 
-/** @ignore */
-export interface Params{
+export interface Params {
     fromFrontdoor: string;
     retURL: string;
     setupid: string;

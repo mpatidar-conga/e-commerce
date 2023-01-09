@@ -2,8 +2,8 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { map } from 'rxjs/operators';
 import { ConfigurationService, ACondition } from '@congacommerce/core';
-import { ProductService, Product,  Cart, CartService } from '@congacommerce/ecommerce';
-import { ProductDrawerService, BatchSelectionService} from '@congacommerce/elements';
+import { ProductService, Product, Cart, CartService } from '@congacommerce/ecommerce';
+import { ProductDrawerService, BatchSelectionService } from '@congacommerce/elements';
 import { Observable } from 'rxjs';
 
 @Component({
@@ -12,36 +12,17 @@ import { Observable } from 'rxjs';
   styleUrls: ['./compare-layout.component.scss']
 })
 export class CompareLayoutComponent implements OnInit, OnDestroy {
-  /**
-   * Array of products to check is theri any product exist.
-   */
   products: Array<Product>;
-  /**
-  * The product identifier set in the configuration file.
-  */
   identifiers: Array<string>;
-  /**
-  * Defined default value if one not found in configuration.
-  */
   identifier: string = 'Id';
-  /**
-  * Defined default value if one not found in configuration.
-  */
-   cart$: Observable<Cart>;
+  cart$: Observable<Cart>;
 
   constructor(private config: ConfigurationService, private activatedRoute: ActivatedRoute, private cartService: CartService, private router: Router, private productService: ProductService, private BatchSelectionService: BatchSelectionService, private productDrawerService: ProductDrawerService) {
     this.identifier = this.config.get('productIdentifier');
   }
 
-  /**
-    * Current subscriptions in this class.
-    * @ignore
-  */
   private subs: Array<any> = [];
 
-  /**
-   * @ignore
-   */
   ngOnInit() {
     this.activatedRoute.queryParams.subscribe(params => {
       this.cart$ = this.cartService.getMyCart();
@@ -68,9 +49,6 @@ export class CompareLayoutComponent implements OnInit, OnDestroy {
     });
   }
 
- /**
-   * @ignore
-   */
   ngOnDestroy() {
     if (this.subs && this.subs.length > 0) {
       this.subs.forEach(sub => sub.unsubscribe());

@@ -1,4 +1,4 @@
-import { Component, OnInit, TemplateRef, NgZone,ChangeDetectionStrategy} from '@angular/core';
+import { Component, OnInit, TemplateRef, NgZone, ChangeDetectionStrategy } from '@angular/core';
 import { AccountLocationService, AccountLocation } from '@congacommerce/ecommerce';
 import { Observable } from 'rxjs';
 import { BsModalService } from 'ngx-bootstrap/modal';
@@ -23,45 +23,29 @@ import * as _ from 'lodash';
 })
 export class AddressBookComponent implements OnInit {
   modalRef: BsModalRef;
-  /**
-   * List of Addresses for logged in user.
-   */
   addressList$: Observable<Array<AccountLocation>>;
   addressEdit: AccountLocation;
   addressLocation: AccountLocation;
   loading: boolean = false;
   message: string = null;
 
-  /**
-   * @ignore
-  */
   constructor(private accountLocationService: AccountLocationService, private modalService: BsModalService, private ngZone: NgZone, private translateService: TranslateService) { }
 
-  /**
-   * @ignore
-  */
   ngOnInit() {
     this.addressList$ = this.accountLocationService.getAccountLocations();
   }
 
-  /**
-   * This will create new address with given input values when clicked save button from Modal template.
-   * @param template Modal template editing purpose.
-   */
   newAddress(template: TemplateRef<any>) {
     this.addressEdit = new AccountLocation();
     this.addressLocation = this.addressEdit;
     this.message = null;
-    this.modalRef = this.modalService.show(template, { class : 'modal-lg'});
+    this.modalRef = this.modalService.show(template, { class: 'modal-lg' });
   }
 
-  /**
-   * @ignore
-  */
-  saveAddress(){
+  saveAddress() {
     this.ngZone.run(() => this.loading = true);
     const requestBody = _.cloneDeep(this.addressLocation);
-    requestBody.Name= this.addressEdit.Name;
+    requestBody.Name = this.addressEdit.Name;
     this.accountLocationService.saveLocationToAccount(requestBody)
       .subscribe(
         res => {
@@ -78,38 +62,25 @@ export class AddressBookComponent implements OnInit {
       );
   }
 
-  /**
-   * Sets default address for logged in user.
-   * @param location Account lcoation to set it as default for logged in user.
-   */
-  setAsDefault(location: AccountLocation){
+  setAsDefault(location: AccountLocation) {
     _.set(location, '_metadata.loading', true);
     this.accountLocationService.setLocationAsDefault(location).subscribe(
-      r => {},
+      r => { },
       e => console.error(e)
     );
   }
 
-  /**
-   * Deletes given address for logged in user.
-   * @param location Account location to be deleted for logged in user.
-   */
-  deleteAddress(location: AccountLocation){
+  deleteAddress(location: AccountLocation) {
     _.set(location, '_metadata.loading', true);
     this.accountLocationService.delete([location]).subscribe(
-      r => {},
+      r => { },
       e => console.error(e)
     );
   }
 
-  /**
-   * Updates selected address for logged in user after Save button cliked on modal template.
-   * @param location Account location to be updated for logged in user.
-   * @param template Modal template editing purpose.
-   */
-  edit(location: AccountLocation, template: TemplateRef<any>){
+  edit(location: AccountLocation, template: TemplateRef<any>) {
     this.addressEdit = location;
     this.addressLocation = _.cloneDeep(this.addressEdit);
-    this.modalRef = this.modalService.show(template, { class : 'modal-lg'});
+    this.modalRef = this.modalService.show(template, { class: 'modal-lg' });
   }
 }

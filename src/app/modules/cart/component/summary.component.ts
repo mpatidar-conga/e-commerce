@@ -42,7 +42,6 @@ export class SummaryComponent implements OnChanges {
   lineItem: CartItem;
   confirmationModal: BsModalRef;
   generatedQuote: Quote;
-  /** @ignore */
   generatedQuoteName: string;
 
   lineItems: Array<CartItem>;
@@ -100,25 +99,9 @@ export class SummaryComponent implements OnChanges {
   }
 }
 
-/**
- * Used to hold state information about a cart summary.
- * @ignore
- */
 export interface SummaryState{
-  /**
-   * Configuration message.
-   */
   configurationMessage: string;
-  /**
-   * Flag to check if download is currently loading.
-   */
   downloadLoading: boolean;
-  /**
-   * Request quote message.
-   */
   requestQuoteMessage: string;
-  /**
-   * Flag to check if request quote is loading.
-   */
   requestQuoteLoading: boolean;
 }

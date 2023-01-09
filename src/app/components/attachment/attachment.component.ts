@@ -12,13 +12,9 @@ export class AttachmentComponent implements OnChanges {
   attachments: any = null;
   parentId: string = null;
   file: File;
-  /** 
-   * uploadFileList used for input FileList
-  */
+
   uploadFileList = [];
-  /**
-   * hasSizeError flag to check max-file-size limit
-   */
+
   hasSizeError: boolean = false;
 
   constructor(private attachmentService: AttachmentService) { }
@@ -33,9 +29,7 @@ export class AttachmentComponent implements OnChanges {
     }
   }
 
-  /**
-   * @ignore 
-   */
+
   fileChange(event) {
     const fileList: FileList = event.target.files;
     if (fileList.length > 0) {
@@ -49,11 +43,9 @@ export class AttachmentComponent implements OnChanges {
 
     }
   }
-  /**
-   * @ignore 
-   */
+
   onSubmit() {
-    this.attachmentService.uploadAttachment(this.file, this.parentId).pipe(take(1)).subscribe(() => {})
+    this.attachmentService.uploadAttachment(this.file, this.parentId).pipe(take(1)).subscribe(() => { })
   }
 
 }
